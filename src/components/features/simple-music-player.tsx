@@ -53,7 +53,10 @@ export function SimpleMusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.7);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragTime, setDragTime] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -91,11 +94,76 @@ export function SimpleMusicPlayer() {
     setCurrentTime(newTime);
   };
 
+  const getTimeFromPosition = (clientX: number) => {
+    if (!progressBarRef.current || !currentSong) return 0;
+    const rect = progressBarRef.current.getBoundingClientRect();
+    const percentage = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+    return (percentage / 100) * currentSong.duration;
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!currentSong) return;
+    setIsDragging(true);
+    const newTime = getTimeFromPosition(e.clientX);
+    setDragTime(newTime);
+    
+    // Prevent text selection during drag
+    e.preventDefault();
+  };
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragging || !currentSong) return;
+    const newTime = getTimeFromPosition(e.clientX);
+    setDragTime(newTime);
+  }, [isDragging, currentSong]);
+
+  const handleMouseUp = useCallback(() => {
+    if (!isDragging || !audioRef.current) return;
+    
+    // Apply the dragged time to the audio
+    audioRef.current.currentTime = dragTime;
+    setCurrentTime(dragTime);
+    setIsDragging(false);
+  }, [isDragging, dragTime]);
+
+  // Touch event handlers for mobile support
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!currentSong) return;
+    setIsDragging(true);
+    const touch = e.touches[0];
+    const newTime = getTimeFromPosition(touch.clientX);
+    setDragTime(newTime);
+    
+    e.preventDefault();
+  };
+
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    if (!isDragging || !currentSong) return;
+    const touch = e.touches[0];
+    const newTime = getTimeFromPosition(touch.clientX);
+    setDragTime(newTime);
+    
+    e.preventDefault();
+  }, [isDragging, currentSong]);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!isDragging || !audioRef.current) return;
+    
+    // Apply the dragged time to the audio
+    audioRef.current.currentTime = dragTime;
+    setCurrentTime(dragTime);
+    setIsDragging(false);
+  }, [isDragging, dragTime]);
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const updateTime = () => setCurrentTime(audio.currentTime);
+    const updateTime = () => {
+      if (!isDragging) {
+        setCurrentTime(audio.currentTime);
+      }
+    };
     const handleEnded = () => setIsPlaying(false);
 
     audio.addEventListener('timeupdate', updateTime);
@@ -106,7 +174,28 @@ export function SimpleMusicPlayer() {
       audio.removeEventListener('timeupdate', updateTime);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [volume]);
+  }, [volume, isDragging]);
+
+  // Global event listeners for drag operations
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
+      document.addEventListener('touchend', handleTouchEnd);
+      
+      // Prevent scrolling on mobile during drag
+      document.body.style.overflow = 'hidden';
+      
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('touchmove', handleTouchMove);
+        document.removeEventListener('touchend', handleTouchEnd);
+        document.body.style.overflow = '';
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -206,36 +295,62 @@ export function SimpleMusicPlayer() {
 
                           {/* Premium Progress Bar */}
                           <div className="space-y-2 mb-6">
-                            <div 
-                              className="relative h-2 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full cursor-pointer shadow-inner group"
-                              onClick={(e) => {
-                                const rect = e.currentTarget.getBoundingClientRect();
-                                const percentage = ((e.clientX - rect.left) / rect.width) * 100;
-                                seekTo(percentage);
-                              }}
-                            >
+                            <div className="progress-bar-container">
+                              <div 
+                                ref={progressBarRef}
+                                className={`relative h-2 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full shadow-inner group transition-all ${
+                                  isDragging 
+                                    ? 'cursor-grabbing progress-bar-dragging' 
+                                    : 'cursor-pointer hover:cursor-grab'
+                                }`}
+                                onMouseDown={handleMouseDown}
+                                onTouchStart={handleTouchStart}
+                                onClick={(e) => {
+                                  if (!isDragging) {
+                                    const rect = e.currentTarget.getBoundingClientRect();
+                                    const percentage = ((e.clientX - rect.left) / rect.width) * 100;
+                                    seekTo(percentage);
+                                  }
+                                }}
+                              >
                               <motion.div 
                                 className="absolute top-0 left-0 h-full bg-gradient-to-r from-sage-green/70 via-sage-green to-sage-green/90 rounded-full shadow-lg"
-                                style={{ width: `${(currentTime / currentSong.duration) * 100}%` }}
+                                style={{ 
+                                  width: `${isDragging 
+                                    ? (dragTime / currentSong.duration) * 100 
+                                    : (currentTime / currentSong.duration) * 100}%` 
+                                }}
                                 initial={{ width: 0 }}
-                                animate={{ width: `${(currentTime / currentSong.duration) * 100}%` }}
-                                transition={{ duration: 0.1 }}
+                                animate={{ 
+                                  width: `${isDragging 
+                                    ? (dragTime / currentSong.duration) * 100 
+                                    : (currentTime / currentSong.duration) * 100}%` 
+                                }}
+                                transition={{ duration: isDragging ? 0 : 0.1 }}
                               />
                               
                               {/* Animated thumb */}
                               <motion.div 
-                                className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg border-2 border-sage-green opacity-0 group-hover:opacity-100 transition-opacity"
+                                className={`absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-lg border-2 border-sage-green transition-opacity ${
+                                  isDragging ? 'opacity-100 scale-110' : 'opacity-0 group-hover:opacity-100'
+                                }`}
                                 style={{ 
-                                  left: `${(currentTime / currentSong.duration) * 100}%`,
+                                  left: `${isDragging 
+                                    ? (dragTime / currentSong.duration) * 100 
+                                    : (currentTime / currentSong.duration) * 100}%`,
                                   marginLeft: '-8px'
                                 }}
                                 whileHover={{ scale: 1.2 }}
                                 whileTap={{ scale: 0.9 }}
+                                animate={isDragging ? { scale: 1.1 } : { scale: 1 }}
                               />
+                              </div>
                             </div>
                             
                             <div className="flex justify-between text-xs text-muted-foreground font-mono">
-                              <span className="bg-white/50 px-2 py-1 rounded-full">{formatTime(currentTime)}</span>
+                              <span className="bg-white/50 px-2 py-1 rounded-full">
+                                {formatTime(isDragging ? dragTime : currentTime)}
+                              </span>
                               <span className="bg-white/50 px-2 py-1 rounded-full">{formatTime(currentSong.duration)}</span>
                             </div>
                           </div>
