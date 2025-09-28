@@ -274,12 +274,14 @@ interface HeroImageProps extends OptimizedImageComponentProps {
   overlay?: boolean;
   overlayOpacity?: number;
   children?: React.ReactNode;
+  fallback?: React.ReactNode;
 }
 
 export function HeroImage({
   overlay = false,
   overlayOpacity = 0.4,
   children,
+  fallback,
   className,
   containerClassName,
   width,
@@ -292,16 +294,23 @@ export function HeroImage({
     ? { width: Number(width), height: Number(height) }
     : { fill: true };
 
+  const [hasError, setHasError] = useState(false);
+
   return (
     <div className={cn('relative', containerClassName)}>
-      <OptimizedImage
-        {...props}
-        {...imageProps}
-        priority={true}
-        lazy={false}
-        responsive={true}
-        className={cn('w-full h-full object-cover', className)}
-      />
+      {hasError && fallback ? (
+        fallback
+      ) : (
+        <OptimizedImage
+          {...props}
+          {...imageProps}
+          priority={true}
+          lazy={false}
+          responsive={true}
+          className={cn('w-full h-full object-cover', className)}
+          onError={() => setHasError(true)}
+        />
+      )}
       
       {/* Overlay */}
       {overlay && (

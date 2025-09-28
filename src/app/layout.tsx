@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { PWAInstallPrompt, PWAInstallButton } from "@/components/pwa/PWAInstallPrompt";
+import { EasterEggs } from "@/components/features/easter-eggs";
 
 // Font configurations
 const inter = Inter({
@@ -149,6 +150,7 @@ export default function RootLayout({
         <Toaster />
         <PWAInstallPrompt />
         <PWAInstallButton />
+        <EasterEggs />
       </body>
     </html>
   );

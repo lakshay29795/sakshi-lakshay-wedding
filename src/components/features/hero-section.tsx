@@ -33,16 +33,31 @@ export function HeroSection({ className }: HeroSectionProps) {
     >
       {/* Background with parallax effect */}
       <div className="absolute inset-0 z-0">
-        {/* Background image */}
-        <HeroImage
-          src="/images/couple/hero-bg.jpg"
-          alt="Sakshi and Lakshay"
-          priority={true}
-          overlay={true}
-          overlayOpacity={0.4}
-          className="object-cover object-center"
-          containerClassName="absolute inset-0"
-        />
+        {/* Gradient background fallback */}
+        <div className="absolute inset-0 bg-gradient-to-br from-rose-100 via-sage-green/20 to-rose-50" />
+        
+        {/* Background image with error handling */}
+        <div className="absolute inset-0">
+          <HeroImage
+            src="/images/couple/hero-bg.jpg"
+            alt="Sakshi and Lakshay"
+            priority={true}
+            overlay={true}
+            overlayOpacity={0.2}
+            className="object-cover object-center"
+            containerClassName="absolute inset-0"
+            fallbackSrc="/images/couple/hero-placeholder.svg"
+            fallback={
+              <div className="absolute inset-0">
+                <img 
+                  src="/images/couple/hero-placeholder.svg" 
+                  alt="Sakshi and Lakshay" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            }
+          />
+        </div>
 
         {/* Floating elements */}
         <div className="absolute inset-0 overflow-hidden">

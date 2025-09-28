@@ -238,7 +238,7 @@ export function SimpleMusicPlayer() {
                               }}
                               className="absolute -top-1 -left-1"
                             >
-                              <Heart className="w-3 h-3 text-sage-green/60 fill-current opacity-60" />
+                              <Heart className="w-3 h-3 text-sage-green/60 fill-current opacity-60" data-heart />
                             </motion.div>
                             
                             <motion.div
@@ -254,7 +254,7 @@ export function SimpleMusicPlayer() {
                               }}
                               className="absolute -top-0.5 -right-2"
                             >
-                              <Heart className="w-2.5 h-2.5 text-sage-green/40 fill-current opacity-50" />
+                              <Heart className="w-2.5 h-2.5 text-sage-green/40 fill-current opacity-50" data-heart />
                             </motion.div>
 
                             <Badge variant="secondary" className="mb-3 bg-white/60 backdrop-blur-sm border-sage-green/20">
@@ -446,7 +446,7 @@ export function SimpleMusicPlayer() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
                           >
-                            <Heart className="w-3 h-3 text-sage-green/60 fill-current mx-auto mb-2" />
+                            <Heart className="w-3 h-3 text-sage-green/60 fill-current mx-auto mb-2" data-heart />
                             <p className="text-xs text-charcoal/80 italic font-medium leading-relaxed">
                               "{currentSong.significance}"
                             </p>
@@ -484,7 +484,7 @@ export function SimpleMusicPlayer() {
           >
             <div className="flex items-center justify-between mb-6">
               <Badge variant="secondary" className="bg-white/60 backdrop-blur-sm border-sage-green/20">
-                <Heart className="w-3 h-3 mr-1 text-sage-green fill-current" />
+                <Heart className="w-3 h-3 mr-1 text-sage-green fill-current" data-heart />
                 Our Love Songs
               </Badge>
             </div>
