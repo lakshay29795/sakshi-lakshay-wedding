@@ -1,0 +1,18 @@
+# Audio Messages Directory
+
+This directory contains audio messages for the timeline:
+
+- first-meeting.mp3 - Audio message about their first meeting
+- first-date.mp3 - Audio message about their first date
+- first-valentine.mp3 - Audio message about their first Valentine's Day
+- moving-in.mp3 - Audio message about moving in together
+- proposal.mp3 - Audio message about the proposal
+
+## Audio Requirements:
+- Format: MP3 (recommended for web compatibility)
+- Quality: 128kbps or higher
+- Duration: 30-60 seconds each
+- File size: Under 2MB each
+
+## Usage:
+These audio files are used in the TimelineItem component with custom audio controls.

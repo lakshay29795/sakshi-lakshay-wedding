@@ -1,0 +1,19 @@
+# Timeline Images Directory
+
+This directory contains images for the relationship timeline:
+
+- first-meeting.jpg - Photo from their first meeting at the coffee shop
+- first-date.jpg - Picture from their first official date in the park
+- first-valentine.jpg - Valentine's Day celebration photo
+- moving-in.jpg - Photo from when they moved in together
+- proposal.jpg - Engagement/proposal photos
+- wedding-day.jpg - Wedding day photos (placeholder for future)
+
+## Image Requirements:
+- Aspect ratio: 4:3 (recommended)
+- Resolution: 800x600 minimum
+- Format: JPG or WebP
+- Optimized for web (under 500KB each)
+
+## Usage:
+These images are used in the InteractiveTimeline component with lazy loading and reveal animations.
