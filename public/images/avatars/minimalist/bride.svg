@@ -1,0 +1,30 @@
+
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg-minimalist" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#F5F5F5"/>
+      <stop offset="100%" style="stop-color:#6B7280"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#bg-minimalist)" opacity="0.1"/>
+  
+  
+  <!-- Individual Avatar -->
+  <g transform="translate(50, 50)">
+    <circle cx="150" cy="150" r="120" fill="#F5F5F5" stroke="#6B7280" stroke-width="3"/>
+    <text x="150" y="160" text-anchor="middle" font-family="serif" font-size="24" fill="#374151">
+      Sakshi
+    </text>
+    <text x="150" y="250" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#374151" opacity="0.7">
+      Minimalist Style
+    </text>
+  </g>
+  
+  
+  <!-- Style indicator -->
+  <text x="10" y="30" font-family="sans-serif" font-size="14" fill="#374151" opacity="0.5">
+    clean lines, simple shapes, minimal design
+  </text>
+</svg>

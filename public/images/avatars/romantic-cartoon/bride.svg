@@ -1,0 +1,30 @@
+
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg-romantic-cartoon" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#F8E8E8"/>
+      <stop offset="100%" style="stop-color:#D53F8C"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#bg-romantic-cartoon)" opacity="0.1"/>
+  
+  
+  <!-- Individual Avatar -->
+  <g transform="translate(50, 50)">
+    <circle cx="150" cy="150" r="120" fill="#F8E8E8" stroke="#D53F8C" stroke-width="3"/>
+    <text x="150" y="160" text-anchor="middle" font-family="serif" font-size="24" fill="#A8B5A0">
+      Sakshi
+    </text>
+    <text x="150" y="250" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#A8B5A0" opacity="0.7">
+      Romantic cartoon Style
+    </text>
+  </g>
+  
+  
+  <!-- Style indicator -->
+  <text x="10" y="30" font-family="sans-serif" font-size="14" fill="#A8B5A0" opacity="0.5">
+    hearts, soft colors, romantic elements
+  </text>
+</svg>

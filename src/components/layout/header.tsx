@@ -18,6 +18,7 @@ const navigationItems = [
   { href: '/', label: 'Home' },
   { href: '/story', label: 'Our Story' },
   { href: '/gallery', label: 'Gallery' },
+  { href: '/interactive', label: 'Interactive' },
   { href: '/rsvp', label: 'RSVP' },
   { href: '/guestbook', label: 'Guest Book' },
   { href: '/notifications', label: 'Notifications' },

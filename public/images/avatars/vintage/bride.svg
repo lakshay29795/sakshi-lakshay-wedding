@@ -1,0 +1,30 @@
+
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg-vintage" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#F3F4F6"/>
+      <stop offset="100%" style="stop-color:#92400E"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#bg-vintage)" opacity="0.1"/>
+  
+  
+  <!-- Individual Avatar -->
+  <g transform="translate(50, 50)">
+    <circle cx="150" cy="150" r="120" fill="#F3F4F6" stroke="#92400E" stroke-width="3"/>
+    <text x="150" y="160" text-anchor="middle" font-family="serif" font-size="24" fill="#7C2D12">
+      Sakshi
+    </text>
+    <text x="150" y="250" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#7C2D12" opacity="0.7">
+      Vintage Style
+    </text>
+  </g>
+  
+  
+  <!-- Style indicator -->
+  <text x="10" y="30" font-family="sans-serif" font-size="14" fill="#7C2D12" opacity="0.5">
+    classic elements, sepia tones, elegant
+  </text>
+</svg>

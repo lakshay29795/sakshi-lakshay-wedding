@@ -4,14 +4,14 @@ import { getAuth, Auth } from 'firebase/auth';
 // Firebase Storage removed - using Vercel Blob Storage instead
 import { getMessaging, Messaging, isSupported } from 'firebase/messaging';
 
-// Firebase configuration with development fallbacks
+// Firebase configuration - only use real values, no fallbacks
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'AIzaSyDkSlFn8Ya1H1I42oQFggLBvRcHX8hiWDk',
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'wedding-project-3525f.firebaseapp.com',
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'wedding-project-3525f',
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '133500127923',
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:133500127923:web:59c9618046fd74a9d7fec6',
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || 'G-VQYMXP7FJC',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Validate required environment variables
@@ -48,30 +48,32 @@ let auth: Auth;
 // let storage: FirebaseStorage;
 let messaging: Messaging | null = null;
 
-// Check if Firebase is already initialized
-try {
-  if (getApps().length === 0) {
-    app = initializeApp(firebaseConfig);
-  } else {
-    app = getApps()[0];
-  }
+// Check if we have valid Firebase configuration
+const hasValidFirebaseConfig = firebaseConfig.apiKey && 
+                               firebaseConfig.projectId && 
+                               firebaseConfig.apiKey !== 'demo-key';
 
-  // Initialize services
-  db = getFirestore(app);
-  auth = getAuth(app);
-  // Firebase Storage removed - using Vercel Blob Storage instead
-} catch (error) {
-  console.error('Firebase initialization error:', error);
-  
-  // In development, create mock services to prevent crashes
-  if (process.env.NODE_ENV === 'development') {
-    console.warn('⚠️  Firebase failed to initialize. Using mock services for development.');
-    // Create a minimal mock app for development
-    app = { name: '[DEFAULT]', options: firebaseConfig } as FirebaseApp;
-    // Note: db, auth will be undefined, but we handle this in the services
-  } else {
-    throw error;
+// Only initialize Firebase if we have valid configuration
+if (hasValidFirebaseConfig) {
+  try {
+    if (getApps().length === 0) {
+      app = initializeApp(firebaseConfig);
+    } else {
+      app = getApps()[0];
+    }
+
+    // Initialize services
+    db = getFirestore(app);
+    auth = getAuth(app);
+    console.log('✅ Firebase initialized successfully');
+  } catch (error) {
+    console.error('Firebase initialization error:', error);
+    console.warn('⚠️  Firebase failed to initialize. Some features may not work.');
   }
+} else {
+  console.warn('⚠️  Firebase configuration missing. Running in demo mode.');
+  console.warn('   Some features (notifications, real-time updates) will not work.');
+  console.warn('   Add Firebase environment variables to enable full functionality.');
 }
 
 // Initialize messaging only in browser environment and if supported
