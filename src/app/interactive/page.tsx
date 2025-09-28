@@ -5,7 +5,7 @@ import { Section } from '@/components/ui/section';
 import { InteractiveLoveMap } from '@/components/features/interactive-love-map';
 import { LoveLanguageQuiz } from '@/components/features/love-language-quiz';
 import { CoupleAvatars } from '@/components/features/couple-avatars';
-import { OurSongsPlaylist } from '@/components/features/our-songs-playlist';
+import { SimpleMusicPlayer } from '@/components/features/simple-music-player';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Heart, Map, Brain, Palette, Music } from 'lucide-react';
@@ -164,7 +164,7 @@ export default function InteractivePage() {
               in our journey together. Listen to previews and discover the stories behind each track.
             </p>
           </div>
-          <OurSongsPlaylist />
+          <SimpleMusicPlayer />
         </Container>
       </Section>
 

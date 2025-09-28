@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, Heart, Music, Volume2, VolumeX, ExternalLink, Plus, RefreshCw } from 'lucide-react';
+import { Play, Pause, Heart, Music, Volume2, VolumeX, ExternalLink, Plus, RefreshCw, SkipBack, SkipForward } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -17,7 +17,7 @@ interface Song {
   album: string;
   duration: number;
   previewUrl?: string;
-  spotifyUrl: string;
+  musicUrl: string; // YouTube Music, Spotify, Apple Music, etc.
   albumArt: string;
   significance: string;
   addedBy: 'couple' | 'guest';
@@ -34,59 +34,88 @@ interface PlaybackState {
   error: string | null;
 }
 
+// 🎵 UPDATE YOUR WEDDING SONGS HERE 🎵
+// Add your downloaded songs to public/audio/songs/ folder
 const ourSongs: Song[] = [
   {
     id: '1',
     title: 'Perfect',
     artist: 'Ed Sheeran',
     album: '÷ (Divide)',
-    duration: 10,
-    previewUrl: '', // Will use generated demo audio
-    spotifyUrl: 'https://open.spotify.com/track/0tgVpDi06FyKpA1z0VMD4v',
+    duration: 263, // Real duration in seconds (4:23)
+    previewUrl: '/audio/songs/perfect-ed-sheeran.mp3', // Your downloaded file
+    musicUrl: 'https://music.youtube.com/watch?v=hgIvwR0eSno',
     albumArt: '/images/songs/perfect-album.jpg',
     significance: 'Our first dance song - the moment we knew we were perfect for each other',
     addedBy: 'couple',
-    dateAdded: new Date('2023-01-15'),
+    dateAdded: new Date('2024-01-15'),
   },
   {
     id: '2',
     title: 'All of Me',
     artist: 'John Legend',
     album: 'Love in the Future',
-    duration: 8,
-    previewUrl: '', // Will use generated demo audio
-    spotifyUrl: 'https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a',
+    duration: 269, // Real duration in seconds (4:29)
+    previewUrl: '/audio/songs/all-of-me-john-legend.mp3', // Your downloaded file
+    musicUrl: 'https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a',
     albumArt: '/images/songs/all-of-me-album.jpg',
     significance: 'The song that played during our first kiss',
     addedBy: 'couple',
-    dateAdded: new Date('2023-01-15'),
+    dateAdded: new Date('2024-01-15'),
   },
   {
     id: '3',
     title: 'Thinking Out Loud',
     artist: 'Ed Sheeran',
     album: 'x (Multiply)',
-    duration: 12,
-    previewUrl: '', // Will use generated demo audio
-    spotifyUrl: 'https://open.spotify.com/track/lp9eB5Kxc5BlHZwJcHa6EX',
+    duration: 281, // Real duration in seconds (4:41)
+    previewUrl: '/audio/songs/thinking-out-loud-ed-sheeran.mp3', // Your downloaded file
+    musicUrl: 'https://open.spotify.com/track/lp9eB5Kxc5BlHZwJcHa6EX',
     albumArt: '/images/songs/thinking-out-loud-album.jpg',
     significance: 'We danced to this in our kitchen on a random Tuesday',
     addedBy: 'couple',
-    dateAdded: new Date('2023-01-15'),
+    dateAdded: new Date('2024-01-15'),
   },
   {
     id: '4',
     title: 'Can\'t Help Myself',
     artist: 'Four Tops',
     album: 'Four Tops Second Album',
-    duration: 15,
-    previewUrl: '', // Will use generated demo audio
-    spotifyUrl: 'https://open.spotify.com/track/3qiyyUfYe7CRYLucrPmulD',
+    duration: 164, // Real duration in seconds (2:44)
+    previewUrl: '/audio/songs/cant-help-myself-four-tops.mp3', // Your downloaded file
+    musicUrl: 'https://open.spotify.com/track/3qiyyUfYe7CRYLucrPmulD',
     albumArt: '/images/songs/cant-help-myself-album.jpg',
     significance: 'Suggested by Sakshi M. - reminds her of young love',
     addedBy: 'guest',
-    dateAdded: new Date('2023-02-20'),
+    dateAdded: new Date('2024-02-20'),
   },
+  {
+    id: '5',
+    title: 'Pal Pal',
+    artist: 'Bollywood Romance',
+    album: 'Hindi Love Songs',
+    duration: 285, // Estimated 4:45 - you can update with exact duration
+    previewUrl: '/audio/songs/Pal Pal(KoshalWorld.Com).mp3', // Your uploaded file
+    musicUrl: 'https://music.youtube.com/search?q=pal+pal+bollywood+romantic+song', // Search link
+    albumArt: '/images/songs/pal-pal-album.jpg',
+    significance: 'A beautiful Hindi romantic song that speaks to our hearts ❤️',
+    addedBy: 'couple',
+    dateAdded: new Date('2024-11-12'),
+  },
+  // 🎵 ADD MORE SONGS HERE:
+  // {
+  //   id: '5',
+  //   title: 'Your Song Title',
+  //   artist: 'Artist Name',
+  //   album: 'Album Name',
+  //   duration: 10,
+  //   previewUrl: '/audio/songs/your-song-file.mp3', // Your downloaded file
+  //   musicUrl: 'https://music.youtube.com/watch?v=YOUR_VIDEO_ID',
+  //   albumArt: '/images/songs/your-album.jpg',
+  //   significance: 'Why this song is special to you',
+  //   addedBy: 'couple',
+  //   dateAdded: new Date('2024-03-01'),
+  // },
 ];
 
 // Fallback album art SVG
@@ -130,6 +159,7 @@ export function OurSongsPlaylist({ className }: { className?: string }) {
         '2': demoSongs.upbeat(),
         '3': demoSongs.mellow(),
         '4': demoSongs.classic(),
+        '5': demoSongs.romantic(), // Fallback for Pal Pal if file doesn't load
       });
     }
   }, []);
@@ -192,7 +222,26 @@ export function OurSongsPlaylist({ className }: { className?: string }) {
         }));
 
         if (playbackState.currentSong !== song.id) {
-          const audioUrl = demoAudioUrls[song.id] || song.previewUrl;
+          let audioUrl = song.previewUrl;
+          
+          // Try to get real Spotify preview if it's a Spotify URL
+          if (!audioUrl && song.musicUrl.includes('spotify.com')) {
+            try {
+              const response = await fetch(`/api/music/preview?url=${encodeURIComponent(song.musicUrl)}`);
+              const data = await response.json();
+              if (data.success) {
+                audioUrl = data.previewUrl;
+              }
+            } catch (error) {
+              console.log('Could not fetch Spotify preview, using demo audio');
+            }
+          }
+          
+          // Fallback to generated demo audio
+          if (!audioUrl) {
+            audioUrl = demoAudioUrls[song.id];
+          }
+          
           if (!audioUrl) {
             throw new Error('No preview available for this song');
           }
@@ -259,6 +308,40 @@ export function OurSongsPlaylist({ className }: { className?: string }) {
     setPlaybackState(prev => ({ ...prev, volume }));
   }, [audioElement]);
 
+  const seekToTime = useCallback((time: number) => {
+    if (!audioElement) return;
+
+    audioElement.currentTime = time;
+    setPlaybackState(prev => ({ ...prev, currentTime: time }));
+  }, [audioElement]);
+
+  const handleProgressClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!audioElement || !currentSong) return;
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const percentage = Math.max(0, Math.min(1, clickX / width));
+    const newTime = percentage * currentSong.duration;
+    
+    seekToTime(newTime);
+  }, [audioElement, currentSong, seekToTime]);
+
+  // Simple click-to-seek functionality (drag will be added later)
+  const [isDragging, setIsDragging] = useState(false);
+
+  const skipBackward = useCallback(() => {
+    if (!audioElement) return;
+    const newTime = Math.max(0, audioElement.currentTime - 10);
+    seekToTime(newTime);
+  }, [audioElement, seekToTime]);
+
+  const skipForward = useCallback(() => {
+    if (!audioElement || !currentSong) return;
+    const newTime = Math.min(currentSong.duration, audioElement.currentTime + 10);
+    seekToTime(newTime);
+  }, [audioElement, currentSong, seekToTime]);
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -315,23 +398,48 @@ export function OurSongsPlaylist({ className }: { className?: string }) {
                   </div>
 
                   <div className="space-y-2">
-                    <Progress 
-                      value={(playbackState.currentTime / currentSong.duration) * 100} 
-                      className="h-2"
-                    />
+                    {/* Clickable & Draggable Progress Bar */}
+                    <div 
+                      className="progress-bar relative h-2 bg-gray-200 rounded-full cursor-pointer hover:bg-gray-300 transition-colors"
+                      onClick={handleProgressClick}
+                    >
+                      <div 
+                        className="absolute top-0 left-0 h-full bg-sage-green rounded-full transition-all duration-100"
+                        style={{ 
+                          width: `${Math.min(100, (playbackState.currentTime / currentSong.duration) * 100)}%` 
+                        }}
+                      />
+                      {/* Progress thumb */}
+                      <div 
+                        className="absolute top-1/2 transform -translate-y-1/2 w-4 h-4 bg-sage-green rounded-full shadow-md hover:scale-110 transition-transform cursor-pointer"
+                        style={{ 
+                          left: `${Math.min(100, (playbackState.currentTime / currentSong.duration) * 100)}%`,
+                          marginLeft: '-8px'
+                        }}
+                      />
+                    </div>
                     <div className="flex justify-between text-xs text-muted-foreground">
                       <span>{formatTime(playbackState.currentTime)}</span>
                       <span>{formatTime(currentSong.duration)}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-center space-x-4">
+                  <div className="flex items-center justify-center space-x-2">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={toggleMute}
                     >
                       {playbackState.isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    </Button>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={skipBackward}
+                      title="Skip back 10 seconds"
+                    >
+                      <SkipBack className="w-4 h-4" />
                     </Button>
                     
                     <Button
@@ -352,10 +460,38 @@ export function OurSongsPlaylist({ className }: { className?: string }) {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => window.open(currentSong.spotifyUrl, '_blank')}
+                      onClick={skipForward}
+                      title="Skip forward 10 seconds"
+                    >
+                      <SkipForward className="w-4 h-4" />
+                    </Button>
+
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.open(currentSong.musicUrl, '_blank')}
                     >
                       <ExternalLink className="w-4 h-4" />
                     </Button>
+                  </div>
+
+                  {/* Volume Control */}
+                  <div className="flex items-center space-x-2 px-4">
+                    <Volume2 className="w-4 h-4 text-muted-foreground" />
+                    <div className="flex-1">
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.1"
+                        value={playbackState.volume}
+                        onChange={(e) => changeVolume(parseFloat(e.target.value))}
+                        className="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                      />
+                    </div>
+                    <span className="text-xs text-muted-foreground w-8">
+                      {Math.round(playbackState.volume * 100)}%
+                    </span>
                   </div>
 
                   <div className="text-center">
@@ -471,15 +607,15 @@ export function OurSongsPlaylist({ className }: { className?: string }) {
                 <Music className="w-5 h-5 text-sage-green mt-0.5" />
                 <div>
                   <h4 className="font-medium text-sm text-charcoal mb-1">
-                    Powered by Spotify
+                    Multi-Platform Music
                   </h4>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Our wedding playlist is synced with Spotify. Guests can suggest songs that will be 
-                    added to our special collection. 
+                    Our wedding playlist supports multiple music platforms including YouTube Music, Spotify, 
+                    Apple Music, and more. Guests can suggest songs that will be added to our special collection. 
                     <br /><br />
-                    <strong>Demo Mode:</strong> Currently playing generated audio previews. 
-                    In production, this would connect to Spotify's Web Playback SDK for real song previews.
-                    Click the external link to listen to the full track on Spotify.
+                    <strong>Full Songs:</strong> Plays complete songs when audio files are provided, 
+                    otherwise falls back to Spotify previews or demo audio. Click the external link to 
+                    listen on your preferred music platform.
                   </p>
                 </div>
               </div>
