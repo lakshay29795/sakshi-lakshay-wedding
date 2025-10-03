@@ -65,13 +65,13 @@ export function PhotoGallery({ photos, itemsPerPage = 12, className }: PhotoGall
   return (
     <div className={cn('w-full', className)}>
       {/* Category Filter */}
-      <div className="mb-12">
+      {/* <div className="mb-12">
         <CategoryFilter
           categories={categories}
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
         />
-      </div>
+      </div> */}
 
       {/* Photo Grid */}
       {displayedPhotos.length > 0 ? (

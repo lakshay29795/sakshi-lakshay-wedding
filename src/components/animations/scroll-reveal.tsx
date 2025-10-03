@@ -34,7 +34,8 @@ const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
     const localRef = React.useRef<HTMLDivElement>(null);
     const isInView = useInView(localRef, { 
       once: triggerOnce, 
-      amount: threshold 
+      amount: threshold,
+      margin: "0px 0px -100px 0px" // Trigger earlier when scrolling
     });
 
     // Combine refs
@@ -65,14 +66,11 @@ const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
           opacity: 0,
           ...directions[direction],
         }}
-        animate={isInView ? {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          scale: 1,
-        } : {
-          opacity: 0,
-          ...directions[direction],
+        animate={{
+          opacity: isInView ? 1 : 0,
+          x: isInView ? 0 : directions[direction].x || 0,
+          y: isInView ? 0 : directions[direction].y || 0,
+          scale: isInView ? 1 : directions[direction].scale || 1,
         }}
         transition={{
           duration,

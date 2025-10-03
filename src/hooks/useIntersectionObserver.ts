@@ -7,15 +7,15 @@ interface UseIntersectionObserverOptions {
   triggerOnce?: boolean;
 }
 
-interface UseIntersectionObserverReturn {
-  ref: React.RefObject<Element>;
+interface UseIntersectionObserverReturn<T extends Element = Element> {
+  ref: React.RefObject<T>;
   isIntersecting: boolean;
   entry: IntersectionObserverEntry | null;
 }
 
-export function useIntersectionObserver(
+export function useIntersectionObserver<T extends Element = HTMLDivElement>(
   options: UseIntersectionObserverOptions = {}
-): UseIntersectionObserverReturn {
+): UseIntersectionObserverReturn<T> {
   const {
     threshold = 0.1,
     root = null,
@@ -25,7 +25,7 @@ export function useIntersectionObserver(
 
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
-  const ref = useRef<Element>(null);
+  const ref = useRef<T>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const handleIntersect = useCallback(
@@ -78,8 +78,10 @@ export function useIntersectionObserver(
 
 // Hook specifically for lazy loading images
 export function useLazyImage(src: string, options?: UseIntersectionObserverOptions) {
-  const { ref, isIntersecting } = useIntersectionObserver({
+  const { ref, isIntersecting } = useIntersectionObserver<HTMLDivElement>({
     triggerOnce: true,
+    rootMargin: '400px', // Load images earlier (400px before they come into view)
+    threshold: 0,
     ...options,
   });
   
@@ -101,10 +103,11 @@ export function useLazyImage(src: string, options?: UseIntersectionObserverOptio
   const handleError = useCallback(() => {
     setIsError(true);
     setIsLoaded(false);
-  }, []);
+    console.error(`Failed to load image: ${src}`);
+  }, [src]);
 
   return {
-    ref,
+    ref: ref as React.RefObject<HTMLDivElement>,
     src: imageSrc,
     isLoaded,
     isError,

@@ -1,0 +1,81 @@
+# Photo Renaming Template
+# Instructions:
+# 1. Look at each photo in public/images/gallery/
+# 2. Edit the "NEW_NAME" column with descriptive names
+# 3. Save this file
+# 4. Run: ./scripts/apply-photo-names.sh
+#
+# Format: YYYY-MM-description.jpg (e.g., 2024-02-valentines-dinner.jpg)
+# Use lowercase and hyphens (no spaces)
+#
+NUMBER,CURRENT_NAME,NEW_NAME,NOTES
+1,1000049562.jpg,couple-moment-001.jpg,Replace with: YYYY-MM-description.jpg
+2,1000049710.jpg,couple-moment-002.jpg,Replace with: YYYY-MM-description.jpg
+3,1000058818.jpg,couple-moment-003.jpg,Replace with: YYYY-MM-description.jpg
+4,1000067505.jpg,couple-moment-004.jpg,Replace with: YYYY-MM-description.jpg
+5,1000101577.jpg,couple-moment-005.jpg,Replace with: YYYY-MM-description.jpg
+6,1000110407.jpg,couple-moment-006.jpg,Replace with: YYYY-MM-description.jpg
+7,11824.jpg,couple-moment-007.jpg,Replace with: YYYY-MM-description.jpg
+8,6997.jpg,couple-moment-008.jpg,Replace with: YYYY-MM-description.jpg
+9,IMG_0125.jpg,moment-009.jpg,Replace with: YYYY-MM-description.jpg
+10,IMG_1113.jpg,moment-010.jpg,Replace with: YYYY-MM-description.jpg
+11,IMG_1524.jpg,moment-011.jpg,Replace with: YYYY-MM-description.jpg
+12,IMG_1819.jpg,moment-012.jpg,Replace with: YYYY-MM-description.jpg
+13,IMG_1936.jpg,moment-013.jpg,Replace with: YYYY-MM-description.jpg
+14,IMG_20180615_235254.jpg,2018-06-15-early-date.jpg,June 2018 - early in relationship
+15,IMG_20231012_014643.jpg,2023-10-12-night-out.jpg,October 2023 - late night moment
+16,IMG_20231208_235842.jpg,2023-12-08-winter-evening.jpg,December 2023 - winter celebration
+17,IMG_20240209_145802__01.jpg,2024-02-09-valentines-day-1.jpg,Valentine's Day 2024
+18,IMG_20240209_155903.jpg,2024-02-09-valentines-day-2.jpg,Valentine's Day 2024
+19,IMG_20240210_165059.jpg,2024-02-10-weekend-together.jpg,Day after Valentine's
+20,IMG_20240224_175955.jpg,2024-02-24-date-night.jpg,Late February date
+21,IMG_20240422_130527.jpg,2024-04-22-spring-outing.jpg,Spring day together
+22,IMG_20240830_145734.jpg,2024-08-30-summer-adventure.jpg,Late summer moment
+23,IMG_20240901_133908.jpg,2024-09-01-labor-day-1.jpg,Labor Day weekend photo 1
+24,IMG_20240901_133914.jpg,2024-09-01-labor-day-2.jpg,Labor Day weekend photo 2
+25,IMG_20240901_134129.jpg,2024-09-01-labor-day-3.jpg,Labor Day weekend photo 3
+26,IMG_20240901_135521.jpg,2024-09-01-labor-day-4.jpg,Labor Day weekend photo 4
+27,IMG_2057.jpg,memory-027.jpg,Replace with: YYYY-MM-description.jpg
+28,IMG_2138.jpg,memory-028.jpg,Replace with: YYYY-MM-description.jpg
+29,IMG_2147.jpg,memory-029.jpg,Replace with: YYYY-MM-description.jpg
+30,IMG_2150.jpg,memory-030.jpg,Replace with: YYYY-MM-description.jpg
+31,IMG_2214.jpg,memory-031.jpg,Replace with: YYYY-MM-description.jpg
+32,IMG_2569.jpg,memory-032.jpg,Replace with: YYYY-MM-description.jpg
+33,IMG_2847.jpg,memory-033.jpg,Replace with: YYYY-MM-description.jpg
+34,IMG_2877.jpg,memory-034.jpg,Replace with: YYYY-MM-description.jpg
+35,IMG_3196.jpg,memory-035.jpg,Replace with: YYYY-MM-description.jpg
+36,IMG_4329.jpg,memory-036.jpg,Replace with: YYYY-MM-description.jpg
+37,IMG_6589.jpg,memory-037.jpg,Replace with: YYYY-MM-description.jpg
+38,IMG_7221.jpg,memory-038.jpg,Replace with: YYYY-MM-description.jpg
+39,first-meeting.jpg,2018-03-14-first-meeting-coffee-shop.jpg,Your first meeting! Keep this special
+
+# ============================================================================
+# NAMING SUGGESTIONS:
+# ============================================================================
+# 
+# Relationship Milestones:
+# - first-meeting, first-date, first-kiss
+# - anniversary-celebration, proposal-moment
+# - engagement-party, ring-reveal
+#
+# Activities:
+# - dinner-date, movie-night, cooking-together
+# - beach-day, hiking-trip, road-trip
+# - picnic-park, coffee-shop, restaurant
+#
+# Occasions:
+# - birthday-celebration, valentines-day
+# - christmas-together, new-years-eve
+# - thanksgiving-dinner, holiday-party
+#
+# Locations:
+# - downtown-walk, sunset-beach, park-stroll
+# - home-cozy, our-apartment, favorite-spot
+#
+# Moods/Types:
+# - candid-moment, selfie-love, silly-photo
+# - dressed-up, casual-day, morning-coffee
+# - romantic-sunset, golden-hour
+#
+# ============================================================================
+

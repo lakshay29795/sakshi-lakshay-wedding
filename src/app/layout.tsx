@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display, Dancing_Script } from "next/font/google";
 import "./globals.css";
+import "@/styles/romantic-theme.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { PWAInstallPrompt, PWAInstallButton } from "@/components/pwa/PWAInstallPrompt";
-import { EasterEggs } from "@/components/features/easter-eggs";
 
 // Font configurations
 const inter = Inter({
@@ -150,7 +150,6 @@ export default function RootLayout({
         <Toaster />
         <PWAInstallPrompt />
         <PWAInstallButton />
-        <EasterEggs />
       </body>
     </html>
   );

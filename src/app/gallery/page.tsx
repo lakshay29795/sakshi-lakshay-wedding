@@ -26,7 +26,7 @@ export default function GalleryPage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="section-padding bg-romantic-pattern">
+      <section className="bg-romantic-pattern" style={{ padding: '10px' }}>
         <Container size="lg" className="text-center">
           <Heading size="hero" align="center" className="mb-6">
             Our Photo Gallery
@@ -37,7 +37,7 @@ export default function GalleryPage() {
           </Text>
           
           {/* Gallery Stats */}
-          <div className="flex justify-center gap-8 text-center">
+          {/* <div className="flex justify-center gap-8 text-center">
             <div>
               <div className="text-2xl font-serif text-sage-green">{galleryPhotos.length}</div>
               <div className="text-sm text-muted-foreground">Photos</div>
@@ -54,7 +54,7 @@ export default function GalleryPage() {
               </div>
               <div className="text-sm text-muted-foreground">Months of Memories</div>
             </div>
-          </div>
+          </div> */}
         </Container>
       </section>
 

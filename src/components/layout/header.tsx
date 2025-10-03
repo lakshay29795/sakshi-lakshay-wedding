@@ -22,7 +22,7 @@ const navigationItems = [
   { href: '/daily-reveals', label: 'Daily Reveals' },
   { href: '/secrets', label: 'Secrets' },
   { href: '/dreams', label: 'Dreams' },
-  { href: '/rsvp', label: 'RSVP' },
+  // { href: '/rsvp', label: 'RSVP' },
   { href: '/guestbook', label: 'Guest Book' },
   { href: '/notifications', label: 'Notifications' },
 ];
@@ -58,7 +58,7 @@ export function Header({ className }: HeaderProps) {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-border/50'
+          ? 'romantic-glass shadow-romantic-soft border-b border-romantic-rose/20'
           : 'bg-transparent',
         className
       )}
@@ -70,14 +70,19 @@ export function Header({ className }: HeaderProps) {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo/Brand */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <Heart className="h-6 w-6 text-sage-green group-hover:text-gold-accent transition-colors" />
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <Heart className="h-6 w-6 text-romantic-rose-dark fill-current group-hover:text-romantic-gold transition-colors" />
+            </motion.div>
             <div className="flex flex-col">
-              <Script size="sm" className="leading-none">
+              <span className="romantic-script text-lg leading-none text-romantic-charcoal">
                 Sakshi & Lakshay
-              </Script>
-              <Text size="xs" variant="muted" className="leading-none">
+              </span>
+              {/* <span className="romantic-body-text text-xs leading-none text-romantic-charcoal-light">
                 November 12, 2025
-              </Text>
+              </span> */}
             </div>
           </Link>
 
@@ -87,25 +92,22 @@ export function Header({ className }: HeaderProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-foreground hover:text-sage-green transition-colors relative group"
+                className="romantic-body-text text-sm font-medium text-romantic-charcoal hover:text-romantic-rose-dark transition-colors relative group"
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-sage-green transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-romantic-rose to-romantic-lavender transition-all duration-300 group-hover:w-full rounded-full" />
               </Link>
             ))}
           </nav>
 
-          {/* PWA Status & RSVP Button (Desktop) */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* PWA Status (Desktop) */}
+          {/* <div className="hidden md:flex items-center">
             <PWAStatusCompact />
-            <WeddingButton variant="elegant" size="sm" asChild>
-              <Link href="/rsvp">RSVP Now</Link>
-            </WeddingButton>
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-foreground hover:text-sage-green transition-colors"
+            className="md:hidden p-2 text-romantic-charcoal hover:text-romantic-rose-dark transition-colors"
             onClick={(e) => {
               e.stopPropagation();
               setIsMenuOpen(!isMenuOpen);
@@ -121,7 +123,7 @@ export function Header({ className }: HeaderProps) {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-b border-border/50 shadow-lg"
+            className="md:hidden absolute top-full left-0 right-0 romantic-glass border-b border-romantic-rose/20 shadow-romantic-soft"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -139,25 +141,13 @@ export function Header({ className }: HeaderProps) {
                   >
                     <Link
                       href={item.href}
-                      className="block py-2 text-base font-medium text-foreground hover:text-sage-green transition-colors"
+                      className="block py-2 romantic-body-text text-base font-medium text-romantic-charcoal hover:text-romantic-rose-dark transition-colors"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.label}
                     </Link>
                   </motion.div>
                 ))}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: navigationItems.length * 0.1 }}
-                  className="pt-4 border-t border-border/50"
-                >
-                  <WeddingButton variant="elegant" size="sm" className="w-full" asChild>
-                    <Link href="/rsvp" onClick={() => setIsMenuOpen(false)}>
-                      RSVP Now
-                    </Link>
-                  </WeddingButton>
-                </motion.div>
               </nav>
             </Container>
           </motion.div>

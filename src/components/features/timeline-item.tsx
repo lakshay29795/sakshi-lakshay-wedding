@@ -203,6 +203,10 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  onError={(e) => {
+                    console.error('Failed to load timeline image:', event.image);
+                    // Fallback to a placeholder or hide the image
+                  }}
                 />
                 
                 {/* Image overlay */}

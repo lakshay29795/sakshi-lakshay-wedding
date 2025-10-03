@@ -32,7 +32,7 @@ export function InteractiveTimeline({ events, className }: InteractiveTimelinePr
     <Section 
       ref={containerRef}
       className={cn('relative overflow-hidden', className)} 
-      padding="xl"
+      padding="sm"
       background="pattern"
     >
       {/* Background decorative elements */}
@@ -65,17 +65,19 @@ export function InteractiveTimeline({ events, className }: InteractiveTimelinePr
 
       <Container size="xl">
         {/* Header */}
-        <ScrollReveal className="text-center mb-16">
-          <Script size="xl" className="mb-4">
-            Our Love Story
-          </Script>
-          <Heading size="h2" variant="romantic" className="mb-6">
-            The Journey of Our Hearts
-          </Heading>
-          <Text size="lg" variant="muted" className="max-w-3xl mx-auto leading-relaxed">
-            From our first meeting to this magical day, every moment has been a step towards forever. 
-            Scroll through the milestones that brought us together and shaped our love story.
-          </Text>
+        <ScrollReveal className="text-center mb-16 w-full">
+          <div className="flex flex-col items-center justify-center w-full">
+            <Script size="xl" className="mb-4 text-center">
+              Our Love Story
+            </Script>
+            <Heading size="h2" variant="romantic" className="mb-6 text-center">
+              The Journey of Our Hearts
+            </Heading>
+            <Text size="lg" variant="muted" className="max-w-3xl mx-auto leading-relaxed text-center">
+              From our first meeting to this magical day, every moment has been a step towards forever. 
+              Scroll through the milestones that brought us together and shaped our love story.
+            </Text>
+          </div>
         </ScrollReveal>
 
         {/* Timeline Progress Indicator */}
