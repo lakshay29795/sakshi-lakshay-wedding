@@ -67,7 +67,7 @@ export function Footer({ className }: FooterProps) {
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <MapPin className="h-4 w-4" />
-                  <span>Rosewood Manor, CA</span>
+                  <span>Pitampura, Delhi</span>
                 </div>
               </div>
             </ScrollReveal>
@@ -93,7 +93,7 @@ export function Footer({ className }: FooterProps) {
             </ScrollReveal>
 
             {/* Important Links */}
-            <ScrollReveal delay={0.2}>
+            {/* <ScrollReveal delay={0.2}>
               <div className="space-y-4">
                 <Heading as="h4" size="h6" variant="romantic">
                   Wedding Info
@@ -110,7 +110,7 @@ export function Footer({ className }: FooterProps) {
                   ))}
                 </nav>
               </div>
-            </ScrollReveal>
+            </ScrollReveal> */}
 
             {/* Social & Contact */}
             <ScrollReveal delay={0.3}>

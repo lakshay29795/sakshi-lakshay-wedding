@@ -304,7 +304,7 @@ export function PersonalizedHero({ className }: PersonalizedHeroProps) {
             </div>
             <div className="bg-white/80 backdrop-blur-sm px-6 py-3 flex items-center gap-3 rounded-full shadow-md border border-pink-100 hover:shadow-lg hover:scale-105 transition-all duration-300">
               <MapPin className="w-5 h-5 text-pink-500" />
-              <span className="font-medium text-gray-800">Rosewood Manor</span>
+              <span className="font-medium text-gray-800">Pitampura, Delhi</span>
             </div>
           </motion.div> */}
 

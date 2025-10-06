@@ -57,7 +57,7 @@ const generateDailyReveals = (): DailyReveal[] => {
       title: "Venue Visit",
       description: "Finding our perfect place",
       image: "/images/daily-reveals/venue-visit.jpg",
-      message: "The moment we walked into Rosewood Manor, we both knew. This is where we'll say 'I do'! 🏰",
+      message: "The moment we walked into our venue in Pitampura, we both knew. This is where we'll say 'I do'! 🏰",
       category: 'preparation' as const
     },
     // 26 days before

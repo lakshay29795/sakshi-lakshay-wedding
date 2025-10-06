@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { PWAInstallPrompt, PWAInstallButton } from "@/components/pwa/PWAInstallPrompt";
+import { FirstVisitWrapper } from "@/components/features/first-visit-wrapper";
 
 // Font configurations
 const inter = Inter({
@@ -31,13 +32,14 @@ export const metadata: Metadata = {
     default: "Sakshi & Lakshay's Wedding",
     template: "%s | Sakshi & Lakshay's Wedding",
   },
-  description: "Join us as we celebrate our love story and begin our journey as husband and wife on November 12, 2025 at Rosewood Manor.",
+  description: "Join us as we celebrate our love story and begin our journey as husband and wife on November 12, 2025 at Pitampura, Delhi.",
   keywords: [
     "wedding",
     "Sakshi Johnson",
     "Lakshay Smith",
     "November 2025",
-    "Rosewood Manor",
+    "Pitampura",
+    "Delhi",
     "wedding invitation",
     "RSVP",
     "love story",
@@ -140,16 +142,18 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} ${dancing.variable} font-sans antialiased bg-background text-foreground`}
       >
-        <div className="relative flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1 pt-16 md:pt-20">
-            {children}
-          </main>
-          <Footer />
-        </div>
-        <Toaster />
-        <PWAInstallPrompt />
-        <PWAInstallButton />
+        <FirstVisitWrapper>
+          <div className="relative flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1 pt-16 md:pt-20">
+              {children}
+            </main>
+            <Footer />
+          </div>
+          <Toaster />
+          <PWAInstallPrompt />
+          <PWAInstallButton />
+        </FirstVisitWrapper>
       </body>
     </html>
   );

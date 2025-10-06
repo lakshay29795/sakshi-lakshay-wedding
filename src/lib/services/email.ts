@@ -173,7 +173,7 @@ function generateRSVPConfirmationHTML(rsvpData: RSVPFormData, rsvpId: string): s
       <div class="container">
         <div class="header">
           <h1>💕 Sakshi & Lakshay 💕</h1>
-          <p style="margin: 10px 0 0 0; font-size: 18px; color: #6B7280;">November 12, 2025 • Rosewood Manor</p>
+          <p style="margin: 10px 0 0 0; font-size: 18px; color: #6B7280;">November 12, 2025 • Pitampura, Delhi</p>
         </div>
         
         <div class="content">
@@ -202,7 +202,7 @@ function generateRSVPConfirmationHTML(rsvpData: RSVPFormData, rsvpId: string): s
             <h3>What's Next?</h3>
             <ul>
               <li>Save the date: <strong>November 12, 2025 at 4:00 PM</strong></li>
-              <li>Location: <strong>Rosewood Manor, 123 Love Lane, Evergreen, CA</strong></li>
+              <li>Location: <strong>Pitampura, Delhi, India</strong></li>
               <li>We'll send more details about parking, accommodations, and the schedule closer to the date</li>
               <li>If you need to make changes, please contact us directly</li>
             </ul>

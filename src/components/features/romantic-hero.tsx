@@ -127,7 +127,7 @@ export function RomanticHero({ className }: RomanticHeroProps) {
             </div>
             <div className="romantic-glass px-6 py-4 flex items-center gap-3 romantic-hover">
               <MapPin className="w-5 h-5 text-romantic-rose-dark" />
-              <span className="romantic-body-text font-medium">Rosewood Manor</span>
+              <span className="romantic-body-text font-medium">Pitampura, Delhi</span>
             </div>
           </motion.div>
 

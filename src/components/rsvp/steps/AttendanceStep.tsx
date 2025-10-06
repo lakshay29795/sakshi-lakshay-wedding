@@ -76,7 +76,7 @@ export function AttendanceStep({ form, isAttending, className }: AttendanceStepP
               </div>
               <div className="flex items-center justify-center space-x-2 text-muted-foreground">
                 <MapPin className="w-4 h-4" />
-                <span>Rosewood Manor, Evergreen</span>
+                <span>Pitampura, Delhi</span>
               </div>
             </div>
           </div>

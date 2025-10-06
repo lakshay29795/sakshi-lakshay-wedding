@@ -13,7 +13,7 @@ export const weddingInfo: WeddingCouple = {
   },
   weddingDate: new Date('2025-11-12T16:00:00'),
   venue: {
-    name: 'Rosewood Manor',
+    name: 'Pitampura, Delhi',
     address: '123 Garden Lane, Romantic Valley, CA 90210',
     coordinates: {
       lat: 34.0522,
@@ -151,7 +151,7 @@ export const relationshipTimeline: TimelineEvent[] = [
     image: '/images/timeline/lavi-wedding.jpg',
     audioMessage: '/audio/timeline/wedding-day.mp3',
     location: {
-      name: 'Rosewood Manor',
+      name: 'Pitampura, Delhi',
       coordinates: {
         lat: 34.0522,
         lng: -118.2437,

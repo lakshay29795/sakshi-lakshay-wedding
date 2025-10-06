@@ -119,7 +119,7 @@ export function HeroSection({ className }: HeroSectionProps) {
                 <div className="flex items-center space-x-2">
                   <MapPin className="h-5 w-5" />
                   <Text size="lg" weight="medium">
-                    Rosewood Manor
+                    Pitampura, Delhi
                   </Text>
                 </div>
               </div>
