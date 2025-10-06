@@ -13,10 +13,39 @@ export function GiftReveal({ onReveal }: GiftRevealProps) {
   const [showPrompt, setShowPrompt] = React.useState(true);
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
+  // Ensure video is always muted
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.volume = 0;
+      
+      // Add event listener to prevent unmuting
+      const preventUnmute = () => {
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          videoRef.current.volume = 0;
+        }
+      };
+      
+      videoRef.current.addEventListener('volumechange', preventUnmute);
+      videoRef.current.addEventListener('play', preventUnmute);
+      
+      return () => {
+        if (videoRef.current) {
+          videoRef.current.removeEventListener('volumechange', preventUnmute);
+          videoRef.current.removeEventListener('play', preventUnmute);
+        }
+      };
+    }
+  }, []);
+
   const handleClick = () => {
     if (!videoStarted && videoRef.current) {
       setVideoStarted(true);
       setShowPrompt(false);
+      // Ensure video is muted before playing
+      videoRef.current.muted = true;
+      videoRef.current.volume = 0;
       videoRef.current.play().catch(error => {
         console.error('Video playback failed:', error);
         // If video fails, proceed to reveal
