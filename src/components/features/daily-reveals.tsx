@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Clock, Heart, Star, Gift, Camera, Sparkles, Lock, Unlock } from 'lucide-react';
+import { Calendar, Heart, Star, Gift, Sparkles, Lock, Unlock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -23,7 +23,7 @@ interface DailyReveal {
 
 // Generate daily reveals leading up to the wedding
 const generateDailyReveals = (): DailyReveal[] => {
-  const weddingDate = new Date(weddingInfo.date);
+  const weddingDate = new Date(weddingInfo.weddingDate);
   const reveals: DailyReveal[] = [];
   
   const revealData = [
@@ -122,18 +122,174 @@ const generateDailyReveals = (): DailyReveal[] => {
       message: "I practiced that proposal speech 100 times. Still forgot half of it when I saw your face! 💍",
       category: 'memory' as const,
       isSpecial: true
+    },
+    // 18 days before
+    {
+      title: "First 'I Love You'",
+      description: "Three words that changed everything",
+      image: "/images/daily-reveals/first-i-love-you.jpg",
+      message: "You said it first, and my heart hasn't stopped racing since that moment. 💗",
+      category: 'memory' as const,
+      isSpecial: true
+    },
+    // 17 days before
+    {
+      title: "Wedding Dress Shopping",
+      description: "Finding the perfect dress",
+      image: "/images/daily-reveals/dress-shopping.jpg",
+      message: "When you stepped out in THAT dress, everyone cried. You looked like a dream! 👰",
+      category: 'preparation' as const
+    },
+    // 16 days before
+    {
+      title: "Love Note #3",
+      description: "Words from the heart",
+      image: "/images/daily-reveals/love-note-3.jpg",
+      message: "Loving you is the easiest thing I've ever done. Marrying you will be the best. 💕",
+      category: 'love-note' as const
+    },
+    // 15 days before
+    {
+      title: "Bachelor/Bachelorette Parties",
+      description: "One last celebration",
+      image: "/images/daily-reveals/bachelor-party.jpg",
+      message: "What happens in Vegas... well, you'll hear ALL about it! 🎉",
+      category: 'friends' as const
+    },
+    // 14 days before
+    {
+      title: "Meeting Your Parents",
+      description: "The nerve-wracking dinner",
+      image: "/images/daily-reveals/meeting-parents.jpg",
+      message: "I was terrified, but they welcomed me like their own. Your mom even shared baby photos! 👨‍👩‍👧",
+      category: 'family' as const
+    },
+    // 13 days before
+    {
+      title: "Anniversary Surprise",
+      description: "Celebrating our love",
+      image: "/images/daily-reveals/anniversary.jpg",
+      message: "Every day with you feels like a celebration, but our anniversaries are extra special! 🎊",
+      category: 'surprise' as const
+    },
+    // 12 days before
+    {
+      title: "Honeymoon Planning",
+      description: "Dreaming of paradise",
+      image: "/images/daily-reveals/honeymoon.jpg",
+      message: "Two weeks of sun, sand, and just us. I can't wait to start our forever! 🏝️",
+      category: 'preparation' as const
+    },
+    // 11 days before
+    {
+      title: "Love Note #4",
+      description: "Counting down the days",
+      image: "/images/daily-reveals/love-note-4.jpg",
+      message: "11 more days until I get to call you my wife/husband forever. My heart is so full! 💖",
+      category: 'love-note' as const
+    },
+    // 10 days before
+    {
+      title: "Rainy Day Adventure",
+      description: "Making memories in the rain",
+      image: "/images/daily-reveals/rainy-day.jpg",
+      message: "Dancing in the rain with you - one of my favorite memories. You make every moment magical! ☔💃",
+      category: 'memory' as const,
+      isSpecial: true
+    },
+    // 9 days before
+    {
+      title: "Rehearsal Dinner Plans",
+      description: "Preparing for the big day",
+      image: "/images/daily-reveals/rehearsal.jpg",
+      message: "Almost there! Can't wait to see all our loved ones together! 🥂",
+      category: 'preparation' as const
+    },
+    // 8 days before
+    {
+      title: "Your Smile",
+      description: "What I fell in love with",
+      image: "/images/daily-reveals/smile.jpg",
+      message: "Your smile lights up my world. 8 more days until I see it as you walk down the aisle! 😊",
+      category: 'love-note' as const
+    },
+    // 7 days before
+    {
+      title: "One Week To Go!",
+      description: "The final countdown",
+      image: "/images/daily-reveals/one-week.jpg",
+      message: "7 days! This time next week, we'll be married! I'm the luckiest person alive! 💫",
+      category: 'surprise' as const,
+      isSpecial: true
+    },
+    // 6 days before
+    {
+      title: "Final Fittings",
+      description: "Making sure everything is perfect",
+      image: "/images/daily-reveals/final-fitting.jpg",
+      message: "Last-minute adjustments and suddenly it's all so real. We're really doing this! 👔👗",
+      category: 'preparation' as const
+    },
+    // 5 days before
+    {
+      title: "Lazy Sunday Morning",
+      description: "Our favorite tradition",
+      image: "/images/daily-reveals/lazy-sunday.jpg",
+      message: "Coffee in bed, your head on my shoulder. Can't wait for a lifetime of Sunday mornings! ☕",
+      category: 'memory' as const
+    },
+    // 4 days before
+    {
+      title: "Love Note #5",
+      description: "Almost there",
+      image: "/images/daily-reveals/love-note-5.jpg",
+      message: "4 more days until forever starts. You are my greatest adventure! 🗺️",
+      category: 'love-note' as const
+    },
+    // 3 days before
+    {
+      title: "Wedding Favors",
+      description: "Little gifts of love",
+      image: "/images/daily-reveals/favors.jpg",
+      message: "Handmade with love! Can't wait to share our happiness with everyone! 🎁",
+      category: 'preparation' as const
+    },
+    // 2 days before
+    {
+      title: "Tomorrow We Marry",
+      description: "The eve of forever",
+      image: "/images/daily-reveals/tomorrow.jpg",
+      message: "Tomorrow, I marry my best friend. Tomorrow, my dreams come true. Tomorrow, forever begins! 💍",
+      category: 'surprise' as const,
+      isSpecial: true
+    },
+    // 1 day before
+    {
+      title: "The Final Day",
+      description: "One more sleep",
+      image: "/images/daily-reveals/final-day.jpg",
+      message: "This is it! Tomorrow I get to marry you! I love you more than words can say. See you at the altar! 💒❤️",
+      category: 'love-note' as const,
+      isSpecial: true
     }
   ];
 
-  // Generate reveals for the last 30 days
+  // Generate reveals for the last 30 days before wedding
+  // Day 30 unlocks 30 days before wedding, Day 29 unlocks 29 days before, etc.
+  // Day 1 unlocks 1 day before wedding
   for (let i = 0; i < Math.min(30, revealData.length); i++) {
-    const daysBeforeWedding = 30 - i;
+    const dayNumber = 30 - i; // 30, 29, 28, ... 1
     const unlockDate = new Date(weddingDate);
-    unlockDate.setDate(unlockDate.getDate() - daysBeforeWedding);
+    
+    // Set unlock date to exactly N days before wedding
+    // For day 30: wedding date - 30 days
+    // For day 1: wedding date - 1 day
+    unlockDate.setDate(unlockDate.getDate() - dayNumber);
+    unlockDate.setHours(0, 0, 0, 0); // Set to start of day for consistent comparison
     
     reveals.push({
-      id: `reveal-${daysBeforeWedding}`,
-      day: daysBeforeWedding,
+      id: `reveal-${dayNumber}`,
+      day: dayNumber,
       ...revealData[i],
       unlockDate
     });
@@ -175,13 +331,18 @@ export function DailyReveals({ className }: { className?: string }) {
   }, []);
 
   // Check if a reveal is unlocked
+  // A reveal unlocks when the current date is >= the unlock date (at start of day)
   const isUnlocked = (reveal: DailyReveal) => {
-    return currentDate >= reveal.unlockDate;
+    const todayStart = new Date(currentDate);
+    todayStart.setHours(0, 0, 0, 0);
+    return todayStart >= reveal.unlockDate;
   };
 
   // Get days until unlock
   const getDaysUntilUnlock = (reveal: DailyReveal) => {
-    const diffTime = reveal.unlockDate.getTime() - currentDate.getTime();
+    const todayStart = new Date(currentDate);
+    todayStart.setHours(0, 0, 0, 0);
+    const diffTime = reveal.unlockDate.getTime() - todayStart.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return Math.max(0, diffDays);
   };

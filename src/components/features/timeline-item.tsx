@@ -91,7 +91,7 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
       )}>
         {/* Text Content */}
         <ScrollReveal 
-          delay={index * 0.1} 
+          delay={0} 
           direction={isReversed ? 'right' : 'left'}
           className={cn(isReversed ? 'lg:col-start-2' : '')}
         >
@@ -169,7 +169,7 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
 
         {/* Image Content */}
         <ScrollReveal 
-          delay={index * 0.1 + 0.2} 
+          delay={0.2} 
           direction={isReversed ? 'left' : 'right'}
           className={cn(isReversed ? 'lg:col-start-1' : '')}
           onInView={handleImageReveal}

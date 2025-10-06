@@ -32,10 +32,13 @@ const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
     ...props
   }, ref) => {
     const localRef = React.useRef<HTMLDivElement>(null);
+    // Always visible - no animation hiding!
+    const [isVisible] = React.useState(true);
+    
     const isInView = useInView(localRef, { 
-      once: triggerOnce, 
-      amount: threshold,
-      margin: "0px 0px -100px 0px" // Trigger earlier when scrolling
+      once: true,
+      amount: 0.1,
+      margin: "0px 0px -200px 0px"
     });
 
     // Combine refs
@@ -48,7 +51,7 @@ const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
       }
     }, [isInView, onInView]);
 
-    const directions = {
+    const directions: Record<string, { x?: number; y?: number; scale?: number }> = {
       up: { y: distance },
       down: { y: -distance },
       left: { x: distance },
@@ -67,14 +70,14 @@ const ScrollReveal = React.forwardRef<HTMLDivElement, ScrollRevealProps>(
           ...directions[direction],
         }}
         animate={{
-          opacity: isInView ? 1 : 0,
-          x: isInView ? 0 : directions[direction].x || 0,
-          y: isInView ? 0 : directions[direction].y || 0,
-          scale: isInView ? 1 : directions[direction].scale || 1,
+          opacity: isVisible ? 1 : 0,
+          x: isVisible ? 0 : (directions[direction]?.x || 0),
+          y: isVisible ? 0 : (directions[direction]?.y || 0),
+          scale: isVisible ? 1 : (directions[direction]?.scale || 1),
         }}
         transition={{
           duration,
-          delay: isInView ? delay : 0,
+          delay,
           ease: 'easeOut',
         }}
         {...props}

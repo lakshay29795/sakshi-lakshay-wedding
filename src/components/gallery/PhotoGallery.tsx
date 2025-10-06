@@ -7,7 +7,6 @@ import type { PhotoGalleryItem } from '@/types';
 import { usePhotoGallery } from '@/hooks/usePhotoGallery';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import { PhotoGridItem } from './PhotoGridItem';
-import { CategoryFilter } from './CategoryFilter';
 import { PhotoLightbox } from './PhotoLightbox';
 import { cn } from '@/lib/utils';
 
@@ -21,11 +20,8 @@ export function PhotoGallery({ photos, itemsPerPage = 12, className }: PhotoGall
   const {
     filteredPhotos,
     displayedPhotos,
-    categories,
-    selectedCategory,
     hasMore,
     isLoading,
-    setSelectedCategory,
     loadMore,
     selectedPhoto,
     selectedPhotoIndex,
@@ -73,6 +69,22 @@ export function PhotoGallery({ photos, itemsPerPage = 12, className }: PhotoGall
         />
       </div> */}
 
+      {/* Photo Count Indicator */}
+      {displayedPhotos.length > 0 && (
+        <div className="mb-6 flex items-center justify-between">
+          {/* <p className="text-sm text-muted-foreground">
+            Showing <span className="font-semibold text-gray-700">{displayedPhotos.length}</span> of{' '}
+            <span className="font-semibold text-gray-700">{filteredPhotos.length}</span> photos
+          </p> */}
+          {isLoading && (
+            <div className="flex items-center gap-2 text-sage-green">
+              <Loader2 size={16} className="animate-spin" />
+              <span className="text-sm">Loading...</span>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Photo Grid */}
       {displayedPhotos.length > 0 ? (
         <motion.div
@@ -107,9 +119,16 @@ export function PhotoGallery({ photos, itemsPerPage = 12, className }: PhotoGall
       {hasMore && (
         <div ref={loadMoreRef} className="mt-12 text-center">
           {isLoading ? (
-            <div className="flex items-center justify-center gap-2 text-muted-foreground">
-              <Loader2 size={20} className="animate-spin" />
-              <span>Loading more photos...</span>
+            <div className="flex flex-col items-center justify-center gap-4 py-8">
+              {/* Enhanced Loader */}
+              <div className="relative">
+                <div className="w-16 h-16 border-4 border-sage-green/20 rounded-full"></div>
+                <div className="absolute inset-0 border-4 border-sage-green border-t-transparent rounded-full animate-spin"></div>
+              </div>
+              <div className="text-center">
+                <p className="text-lg font-medium text-gray-700 mb-1">Loading more memories...</p>
+                <p className="text-sm text-muted-foreground">Fetching beautiful moments 📸</p>
+              </div>
             </div>
           ) : (
             <button
@@ -123,12 +142,7 @@ export function PhotoGallery({ photos, itemsPerPage = 12, className }: PhotoGall
       )}
 
       {/* Photo Stats */}
-      <div className="mt-8 text-center text-sm text-muted-foreground">
-        Showing {displayedPhotos.length} of {filteredPhotos.length} photos
-        {selectedCategory !== 'all' && (
-          <span> in {categories.find(c => c.id === selectedCategory)?.label}</span>
-        )}
-      </div>
+      {/* Photo count moved to top - removed duplicate */}
 
       {/* Lightbox */}
       <PhotoLightbox

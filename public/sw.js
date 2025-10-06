@@ -14,18 +14,25 @@ self.addEventListener('install', (event) => {
   console.log('Service Worker: Installing...');
   
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
+    caches.open(CACHE_NAME).then(async (cache) => {
       console.log('Service Worker: Caching essential resources');
-      return cache.addAll([
-        OFFLINE_URL,
+      const urlsToCache = [
         '/',
         '/gallery',
         '/story',
         '/rsvp',
         '/guestbook',
-        FALLBACK_IMAGE,
-        '/manifest.json'
-      ]);
+      ];
+      
+      // Cache each URL individually to avoid failing the entire operation
+      const cachePromises = urlsToCache.map(url => 
+        cache.add(url).catch(error => {
+          console.warn(`Failed to cache ${url}:`, error);
+          return Promise.resolve(); // Don't fail installation if one resource fails
+        })
+      );
+      
+      return Promise.all(cachePromises);
     })
   );
   

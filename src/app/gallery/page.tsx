@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { Container } from '@/components/ui/container';
 import { Heading, Text } from '@/components/ui/typography';
 import { PhotoGallery } from '@/components/gallery/PhotoGallery';
-import { galleryPhotos } from '@/data/gallery-data';
+import { galleryPhotos } from '@/data/gallery-data-generated';
 
 export const metadata: Metadata = {
   title: 'Photo Gallery | Sakshi & Lakshay\'s Wedding',
@@ -59,7 +59,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Gallery Section */}
-      <section className="section-padding">
+      <section style={{ padding: '10px' }}>
         <Container size="xl">
           <PhotoGallery photos={galleryPhotos} itemsPerPage={16} />
         </Container>
@@ -82,7 +82,7 @@ export default function GalleryPage() {
               Email Us Photos
             </a>
             <a
-              href="https://www.instagram.com/sarah_michael_wedding"
+              href="https://www.instagram.com/taashi.surbhi/followers/"
               target="_blank"
               rel="noopener noreferrer"
               className="wedding-button-secondary"

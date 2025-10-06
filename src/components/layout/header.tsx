@@ -18,13 +18,14 @@ const navigationItems = [
   { href: '/', label: 'Home' },
   { href: '/story', label: 'Our Story' },
   { href: '/gallery', label: 'Gallery' },
+  { href: '/messages', label: 'Messages' },
   { href: '/interactive', label: 'Interactive' },
   { href: '/daily-reveals', label: 'Daily Reveals' },
   { href: '/secrets', label: 'Secrets' },
-  { href: '/dreams', label: 'Dreams' },
+  // { href: '/dreams', label: 'Dreams' },
   // { href: '/rsvp', label: 'RSVP' },
-  { href: '/guestbook', label: 'Guest Book' },
-  { href: '/notifications', label: 'Notifications' },
+  // { href: '/guestbook', label: 'Guest Book' },
+  // { href: '/notifications', label: 'Notifications' },
 ];
 
 export function Header({ className }: HeaderProps) {

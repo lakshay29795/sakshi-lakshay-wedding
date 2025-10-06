@@ -62,17 +62,28 @@ export function PhotoGridItem({ photo, index, onClick, className }: PhotoGridIte
     >
       {/* Main Image Container with fixed aspect ratio */}
       <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-blush-pink/10 to-sage-green/10">
-        {/* Loading Placeholder - Always visible until loaded */}
+        {/* Loading Placeholder with Spinner - Always visible until loaded */}
         {!isLoaded && !isError && (
-          <div className="absolute inset-0 bg-gradient-to-br from-blush-pink/20 to-sage-green/20 animate-pulse" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blush-pink/20 to-sage-green/20 animate-pulse flex items-center justify-center">
+            <div className="flex flex-col items-center gap-3">
+              {/* Spinner */}
+              <div className="relative w-12 h-12">
+                <div className="absolute inset-0 border-4 border-sage-green/20 rounded-full"></div>
+                <div className="absolute inset-0 border-4 border-sage-green border-t-transparent rounded-full animate-spin"></div>
+              </div>
+              {/* Loading Text */}
+              <p className="text-sm text-gray-500 font-medium">Loading...</p>
+            </div>
+          </div>
         )}
 
         {/* Error State */}
         {isError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blush-pink/10 to-sage-green/10 text-muted-foreground">
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-50/50 to-orange-50/50 text-muted-foreground">
             <div className="text-center">
-              <div className="text-2xl mb-2">📷</div>
-              <p className="text-sm">Failed to load image</p>
+              <div className="text-4xl mb-2">📷</div>
+              <p className="text-sm font-medium text-red-600">Failed to load</p>
+              <p className="text-xs text-gray-500 mt-1">Image not found</p>
             </div>
           </div>
         )}
@@ -133,9 +144,9 @@ export function PhotoGridItem({ photo, index, onClick, className }: PhotoGridIte
         </button>
 
         {/* Category Badge */}
-        <div className="absolute bottom-3 left-3 px-2 py-1 bg-black/50 text-white text-xs rounded-full backdrop-blur-sm">
+        {/* <div className="absolute bottom-3 left-3 px-2 py-1 bg-black/50 text-white text-xs rounded-full backdrop-blur-sm">
           {photo.category.charAt(0).toUpperCase() + photo.category.slice(1)}
-        </div>
+        </div> */}
 
         {/* Caption (visible on hover) */}
         {photo.caption && (

@@ -224,13 +224,13 @@ export function InteractiveLoveMap({ className }: { className?: string }) {
 
                   {/* Image */}
                   {selectedLocation.image && (
-                    <div className="relative h-48 w-full rounded-md overflow-hidden">
+                    <div className="relative h-48 w-full rounded-md overflow-hidden bg-gray-100">
                       <img
                         src={selectedLocation.image}
                         alt={selectedLocation.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                     </div>
                   )}
 

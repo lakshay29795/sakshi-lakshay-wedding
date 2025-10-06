@@ -41,9 +41,9 @@ if (missingEnvVars.length > 0 && process.env.NODE_ENV === 'development') {
 }
 
 // Initialize Firebase
-let app: FirebaseApp;
-let db: Firestore;
-let auth: Auth;
+let app: FirebaseApp | undefined;
+let db: Firestore | undefined;
+let auth: Auth | undefined;
 // Firebase Storage removed - using Vercel Blob Storage instead
 // let storage: FirebaseStorage;
 let messaging: Messaging | null = null;
@@ -66,6 +66,17 @@ if (hasValidFirebaseConfig) {
     db = getFirestore(app);
     auth = getAuth(app);
     console.log('✅ Firebase initialized successfully');
+    
+    // Initialize messaging only in browser environment and if supported
+    if (typeof window !== 'undefined') {
+      isSupported().then((supported) => {
+        if (supported && app) {
+          messaging = getMessaging(app);
+        }
+      }).catch((error) => {
+        console.warn('Firebase messaging not supported:', error);
+      });
+    }
   } catch (error) {
     console.error('Firebase initialization error:', error);
     console.warn('⚠️  Firebase failed to initialize. Some features may not work.');
@@ -74,15 +85,6 @@ if (hasValidFirebaseConfig) {
   console.warn('⚠️  Firebase configuration missing. Running in demo mode.');
   console.warn('   Some features (notifications, real-time updates) will not work.');
   console.warn('   Add Firebase environment variables to enable full functionality.');
-}
-
-// Initialize messaging only in browser environment and if supported
-if (typeof window !== 'undefined') {
-  isSupported().then((supported) => {
-    if (supported) {
-      messaging = getMessaging(app);
-    }
-  });
 }
 
 // Export Firebase services
