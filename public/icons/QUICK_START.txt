@@ -1,0 +1,160 @@
+╔═══════════════════════════════════════════════════════════════╗
+║         PWA ICON SETUP - QUICK START (3 SIMPLE STEPS)        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+📱 HOW TO SET YOUR ANDROID APP LOGO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: PREPARE LOGO
+━━━━━━━━━━━━━━━━━━━
+• Get your logo/photo (square, 512x512 or larger)
+• Save as PNG format
+• Name it: logo.png
+
+
+STEP 2: ADD LOGO TO PROJECT
+━━━━━━━━━━━━━━━━━━━━━━━━━
+• Copy logo.png to this folder:
+  wedding-website/public/icons/logo.png
+
+
+STEP 3: GENERATE ALL ICON SIZES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Open terminal in project root
+• Run these commands:
+
+  cd wedding-website/public/icons
+  ./generate-icons.sh
+
+• This creates all 8 required icon sizes!
+
+
+STEP 4: DEPLOY
+━━━━━━━━━━━━━━━
+• From wedding-website folder:
+
+  git add .
+  git commit -m "Add PWA app icons"
+  git push
+
+• Wait for Vercel to deploy (automatic)
+
+
+STEP 5: TEST ON ANDROID
+━━━━━━━━━━━━━━━━━━━━━━
+1. Open your website in Chrome (Android)
+2. Menu (⋮) → "Add to Home screen"
+3. See your custom icon! 🎉
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 ALTERNATIVE METHOD (NO CODING)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you prefer not to use terminal:
+
+1. Visit: https://www.pwabuilder.com/imageGenerator
+
+2. Upload your logo image
+
+3. Click "Generate" and download ZIP file
+
+4. Extract all PNG files to:
+   wedding-website/public/icons/
+
+5. Commit and push:
+   git add .
+   git commit -m "Add PWA app icons"
+   git push
+
+Done! 🚀
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 FILES YOU NEED (created automatically by script)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+icon-72x72.png      ← Android small
+icon-96x96.png      ← Android medium
+icon-128x128.png    ← PWA standard
+icon-144x144.png    ← Android HD
+icon-152x152.png    ← iPad
+icon-192x192.png    ← Android home screen ⭐ Important
+icon-384x384.png    ← Android HD
+icon-512x512.png    ← Android splash ⭐ Important
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 LOGO DESIGN TIPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ GOOD:
+   • Square aspect ratio (1:1)
+   • Simple, recognizable design
+   • High contrast colors
+   • PNG with transparent background
+   • Centered elements
+   • 512x512 or larger
+
+❌ AVOID:
+   • Rectangular images
+   • Too much text
+   • Complex details
+   • Elements near edges
+   • Low resolution
+   • JPEG format
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 QUICK LOGO IDEAS FOR YOUR WEDDING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Your couple photo (cropped to square)
+2. Two intertwined hearts with your initials
+3. Your monogram (S & L)
+4. Wedding date in elegant font
+5. Simple heart icon with your names
+6. Your wedding venue/location
+7. Minimalist rings icon
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Q: Script won't run?
+A: Run: chmod +x generate-icons.sh
+
+Q: Icons not showing on Android?
+A: 1. Clear browser cache
+   2. Uninstall PWA from home screen
+   3. Re-add to home screen
+   4. Check all icon files exist
+
+Q: Icons look blurry?
+A: Use higher resolution source image (1024x1024)
+
+Q: Wrong icon showing?
+A: Clear cache and reinstall PWA
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 MORE HELP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+• Full documentation: README.md (in this folder)
+• Icon generator script: generate-icons.sh (in this folder)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+That's it! Simple 3-step process. Good luck! 🎉
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+

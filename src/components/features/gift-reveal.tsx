@@ -27,10 +27,11 @@ export function GiftReveal({ onReveal }: GiftRevealProps) {
 
   const handleVideoEnd = () => {
     setVideoEnded(true);
+    onReveal();
     // Wait for fade transition then reveal website
-    setTimeout(() => {
-      onReveal();
-    }, 1500);
+    // setTimeout(() => {
+    //   onReveal();
+    // }, 1500);
   };
 
   return (
@@ -40,18 +41,19 @@ export function GiftReveal({ onReveal }: GiftRevealProps) {
     >
       {/* Video container */}
       <div className="absolute inset-0 bg-black flex items-center justify-center">
-        <video
+        {!videoEnded &&<video
           ref={videoRef}
           className="w-full h-full object-cover"
           playsInline
           preload="auto"
+          muted
           onEnded={handleVideoEnd}
           onError={handleVideoEnd}
         >
           <source src="/videos/gift-reveal.mp4" type="video/mp4" />
           <source src="/videos/gift-reveal.webm" type="video/webm" />
           Your browser does not support the video tag.
-        </video>
+        </video>}
       </div>
 
       {/* Click prompt overlay */}
@@ -153,20 +155,17 @@ export function GiftReveal({ onReveal }: GiftRevealProps) {
         )}
       </AnimatePresence>
 
-      {/* Elegant gradient transition overlay */}
-      <AnimatePresence>
+      {/* Black screen transition overlay */}
+      {/* <AnimatePresence>
         {videoEnded && (
           <motion.div
-            className="absolute inset-0"
-            style={{
-              background: 'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 1) 100%)',
-            }}
+            className="absolute inset-0 bg-black"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.5, ease: 'easeInOut' }}
+            transition={{ duration: 1, ease: 'easeInOut' }}
           />
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 }
