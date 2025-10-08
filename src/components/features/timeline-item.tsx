@@ -7,7 +7,7 @@ import { WeddingCard, WeddingCardContent, WeddingCardHeader, WeddingCardTitle, W
 import { Text, Script } from '@/components/ui/typography';
 import { ScrollReveal } from '@/components/animations/scroll-reveal';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, MapPin, Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { Calendar, MapPin, Play, Pause, Volume2, VolumeX, ExternalLink } from 'lucide-react';
 import type { TimelineEvent } from '@/types';
 
 interface TimelineItemProps {
@@ -21,7 +21,15 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
   const [isImageRevealed, setIsImageRevealed] = React.useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = React.useState(false);
   const [isMuted, setIsMuted] = React.useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
   const audioRef = React.useRef<HTMLAudioElement>(null);
+
+  // Character limit for description preview
+  const CHAR_LIMIT = 300;
+  const shouldTruncate = event.description.length > CHAR_LIMIT;
+  const displayDescription = isExpanded || !shouldTruncate 
+    ? event.description 
+    : event.description.slice(0, CHAR_LIMIT) + '...';
 
   // Handle audio playback
   const toggleAudio = () => {
@@ -68,13 +76,22 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
     setIsImageRevealed(true);
   };
 
+  // Open location in Google Maps
+  const openInMaps = () => {
+    if (event.location?.coordinates) {
+      const { lat, lng } = event.location.coordinates;
+      const url = `https://www.google.com/maps?q=${lat},${lng}`;
+      window.open(url, '_blank');
+    }
+  };
+
   return (
     <div className={cn('relative', className)}>
-      {/* Timeline connector line */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-sage-green/50 to-blush-pink/50" />
+      {/* Timeline connector line - left side on mobile, centered on desktop */}
+      <div className="absolute left-[1.125rem] lg:left-1/2 lg:transform lg:-translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-sage-green/50 to-blush-pink/50" />
       
-      {/* Timeline dot */}
-      <div className="absolute left-1/2 top-8 transform -translate-x-1/2 z-10">
+      {/* Timeline dot - positioned left on mobile, centered on desktop */}
+      <div className="absolute left-4 lg:left-1/2 top-8 lg:transform lg:-translate-x-1/2 z-10">
         <motion.div
           className="w-4 h-4 rounded-full bg-sage-green border-4 border-white shadow-lg"
           initial={{ scale: 0 }}
@@ -86,7 +103,7 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
 
       {/* Content */}
       <div className={cn(
-        'grid grid-cols-1 lg:grid-cols-2 gap-8 items-center',
+        'grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-12 lg:pl-0',
         isReversed ? 'lg:grid-flow-col-dense' : ''
       )}>
         {/* Text Content */}
@@ -97,16 +114,28 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
         >
           <WeddingCard variant="elegant" padding="lg" hover="lift">
             <WeddingCardHeader>
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
-                  <span>{formatDate(event.date, 'long')}</span>
-                </div>
-                {event.location && (
+              <div className="flex flex-col gap-3 mb-4">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4" />
-                    <span>{event.location.name}</span>
+                    <Calendar className="h-4 w-4" />
+                    <span>{formatDate(event.date, 'long')}</span>
                   </div>
+                  {event.location && (
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4" />
+                      <span className="hidden sm:inline">{event.location.name}</span>
+                    </div>
+                  )}
+                </div>
+                {event.location?.coordinates && (
+                  <button
+                    onClick={openInMaps}
+                    className="flex items-center gap-1.5 text-xs text-sage-green hover:text-sage-green/80 font-medium transition-colors w-fit group"
+                  >
+                    <MapPin className="h-3.5 w-3.5" />
+                    <span>{event.location.name}</span>
+                    <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </button>
                 )}
               </div>
               
@@ -116,9 +145,53 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
             </WeddingCardHeader>
             
             <WeddingCardContent>
-              <WeddingCardDescription className="text-base leading-relaxed mb-4">
-                {event.description}
-              </WeddingCardDescription>
+              <motion.div
+                initial={false}
+                animate={{ height: 'auto' }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
+                <WeddingCardDescription className="text-base leading-relaxed mb-4">
+                  {displayDescription}
+                </WeddingCardDescription>
+
+                {/* Read More/Less Button */}
+                {shouldTruncate && (
+                  <button
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className="text-sage-green hover:text-sage-green/80 font-medium text-sm mb-4 transition-colors flex items-center gap-1 hover:gap-2"
+                  >
+                    {isExpanded ? (
+                      <>
+                        <span>Read less</span>
+                        <motion.svg 
+                          className="w-4 h-4" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                          animate={{ rotate: 180 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </motion.svg>
+                      </>
+                    ) : (
+                      <>
+                        <span>Read more</span>
+                        <motion.svg 
+                          className="w-4 h-4" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                          animate={{ rotate: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </motion.svg>
+                      </>
+                    )}
+                  </button>
+                )}
+              </motion.div>
 
               {/* Audio Controls */}
               {event.audioMessage && (
@@ -203,9 +276,8 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  onError={(e) => {
+                  onError={() => {
                     console.error('Failed to load timeline image:', event.image);
-                    // Fallback to a placeholder or hide the image
                   }}
                 />
                 

@@ -259,10 +259,6 @@
 
 @layer utilities {
   /* Custom spacing */
-  .section-padding {
-    @apply py-16 md:py-24 lg:py-32;
-  }
-  
   .container-padding {
     @apply px-4 sm:px-6 lg:px-8;
   }

@@ -50,7 +50,7 @@ export default function InteractivePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream to-white">
       {/* Hero Section */}
-      <Section className="pt-24 pb-12">
+      <Section padding="none" className="pt-8 pb-8">
         <Container>
           <div className="text-center max-w-3xl mx-auto">
             <div className="flex items-center justify-center space-x-2 mb-6">
@@ -60,17 +60,17 @@ export default function InteractivePage() {
               </h1>
               <Heart className="w-8 h-8 text-sage-green" />
             </div>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            {/* <p className="text-lg text-muted-foreground leading-relaxed">
               Dive deeper into our love story with these interactive features. Explore our journey, 
               discover your love language, enjoy our custom avatars, and listen to the songs that 
               define our relationship.
-            </p>
+            </p> */}
           </div>
         </Container>
       </Section>
 
       {/* Features Overview */}
-      <Section className="py-12">
+      {/* <Section className="py-12">
         <Container>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {features.map((feature) => (
@@ -86,10 +86,10 @@ export default function InteractivePage() {
             ))}
           </div>
         </Container>
-      </Section>
+      </Section> */}
 
       {/* Interactive Love Map */}
-      <Section className="py-16 bg-white">
+      {/* <Section className="py-16 bg-white">
         <Container>
           <div className="text-center mb-12">
             <Badge variant="secondary" className="mb-4">
@@ -106,10 +106,10 @@ export default function InteractivePage() {
           </div>
           <InteractiveLoveMap />
         </Container>
-      </Section>
+      </Section> */}
 
       {/* Love Language Quiz */}
-      <Section className="py-16 bg-gradient-to-br from-blush-pink/10 to-sage-green/10">
+      <Section padding="none" className="bg-gradient-to-br from-blush-pink/10 to-sage-green/10">
         <Container>
           <div className="text-center mb-12">
             <Badge variant="secondary" className="mb-4">
@@ -129,7 +129,7 @@ export default function InteractivePage() {
       </Section>
 
       {/* Custom Couple Avatars */}
-      <Section className="py-16 bg-white">
+      {/* <Section className="py-16 bg-white">
         <Container>
           <div className="text-center mb-12">
             <Badge variant="secondary" className="mb-4">
@@ -146,10 +146,10 @@ export default function InteractivePage() {
           </div>
           <CoupleAvatars />
         </Container>
-      </Section>
+      </Section> */}
 
       {/* Our Songs Playlist */}
-      <Section className="py-16 bg-gradient-to-br from-sage-green/10 to-blush-pink/10">
+      <Section padding="none" className="py-16 bg-gradient-to-br from-sage-green/10 to-blush-pink/10">
         <Container>
           <div className="text-center mb-12">
             <Badge variant="secondary" className="mb-4">
@@ -169,7 +169,7 @@ export default function InteractivePage() {
       </Section>
 
       {/* Call to Action */}
-      <Section className="py-16 bg-white">
+      {/* <Section className="py-16 bg-white">
         <Container>
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl font-serif text-charcoal mb-4">
@@ -196,7 +196,7 @@ export default function InteractivePage() {
             </div>
           </div>
         </Container>
-      </Section>
+      </Section> */}
     </div>
   );
 }
