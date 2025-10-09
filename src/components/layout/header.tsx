@@ -21,7 +21,7 @@ const navigationItems = [
   { href: '/messages', label: 'Messages' },
   { href: '/interactive', label: 'Interactive' },
   { href: '/daily-reveals', label: 'Daily Reveals' },
-  { href: '/secrets', label: 'Secrets' },
+  // { href: '/secrets', label: 'Secrets' },
   // { href: '/dreams', label: 'Dreams' },
   // { href: '/rsvp', label: 'RSVP' },
   // { href: '/guestbook', label: 'Guest Book' },

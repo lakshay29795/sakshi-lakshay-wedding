@@ -103,16 +103,16 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
 
       {/* Content */}
       <div className={cn(
-        'grid grid-cols-1 lg:grid-cols-2 gap-8 items-center pl-12 lg:pl-0',
+        'grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch pl-12 lg:pl-0',
         isReversed ? 'lg:grid-flow-col-dense' : ''
       )}>
         {/* Text Content */}
         <ScrollReveal 
           delay={0} 
           direction={isReversed ? 'right' : 'left'}
-          className={cn(isReversed ? 'lg:col-start-2' : '')}
+          className={cn('h-full', isReversed ? 'lg:col-start-2' : '')}
         >
-          <WeddingCard variant="elegant" padding="lg" hover="lift">
+          <WeddingCard variant="elegant" padding="lg" hover="lift" className="h-full flex flex-col">
             <WeddingCardHeader>
               <div className="flex flex-col gap-3 mb-4">
                 <div className="flex items-center justify-between">
@@ -144,7 +144,7 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
               </WeddingCardTitle>
             </WeddingCardHeader>
             
-            <WeddingCardContent>
+            <WeddingCardContent className="flex-1">
               <motion.div
                 initial={false}
                 animate={{ height: 'auto' }}
@@ -244,12 +244,12 @@ export function TimelineItem({ event, index, isReversed = false, className }: Ti
         <ScrollReveal 
           delay={0.2} 
           direction={isReversed ? 'left' : 'right'}
-          className={cn(isReversed ? 'lg:col-start-1' : '')}
+          className={cn('h-full', isReversed ? 'lg:col-start-1' : '')}
           onInView={handleImageReveal}
         >
-          <div className="relative group">
+          <div className="relative group h-full">
             {event.image && (
-              <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
+              <div className="relative h-full min-h-[300px] lg:min-h-0 rounded-lg overflow-hidden shadow-lg">
                 <AnimatePresence>
                   {!isImageRevealed && (
                     <motion.div

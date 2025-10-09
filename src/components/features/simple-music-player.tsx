@@ -15,36 +15,113 @@ interface Song {
   duration: number;
   audioUrl: string;
   musicUrl: string;
-  significance: string;
+  significance?: string;
 }
 
 const songs: Song[] = [
-  {
-    id: '1',
-    title: 'Perfect',
-    artist: 'Ed Sheeran',
-    duration: 263,
-    audioUrl: '/audio/songs/perfect-ed-sheeran.mp3',
-    musicUrl: 'https://music.youtube.com/watch?v=hgIvwR0eSno',
-    significance: 'Our first dance song',
-  },
-  {
-    id: '2',
-    title: 'All of Me',
-    artist: 'John Legend', 
-    duration: 269,
-    audioUrl: '/audio/songs/all-of-me-john-legend.mp3',
-    musicUrl: 'https://open.spotify.com/track/3U4isOIWM3VvDubwSI3y7a',
-    significance: 'The song that played during our first kiss',
-  },
+  // {
+  //   id: '2',
+  //   title: 'Jo Tum Mere Ho',
+  //   artist: 'Anuv Jain',
+  //   duration: 240,
+  //   audioUrl: '/audio/songs/Anuv Jain - JO TUM MERE HO (Official Video) - Anuv Jain.mp3',
+  //   musicUrl: 'https://music.youtube.com/watch?v=pv0hTi_mixw',
+  // },
   {
     id: '3',
+    title: 'Jo Tum Mere Ho',
+    artist: 'Anuv Jain',
+    duration: 240,
+    audioUrl: '/audio/songs/Jo Tum Mere Ho Anuv Jain 320 Kbps.mp3',
+    musicUrl: 'https://music.youtube.com/watch?v=pv0hTi_mixw',
+  },
+  {
+    id: '4',
+    title: 'Aaj Jaane Ki Zidd Na Karo',
+    artist: 'Bhopal Express',
+    duration: 320,
+    audioUrl: '/audio/songs/Aaj Jaane Ki Zidd Na Karo Bhopal Express 320 Kbps.mp3',
+    musicUrl: 'https://music.youtube.com/search?q=aaj+jaane+ki+zidd+na+karo',
+  },
+  {
+    id: '5',
+    title: 'Aankhon Se Batana',
+    artist: 'Dikshant',
+    duration: 245,
+    audioUrl: '/audio/songs/Aankhon Se Batana Dikshant 320 Kbps.mp3',
+    musicUrl: 'https://music.youtube.com/search?q=aankhon+se+batana+dikshant',
+  },
+  {
+    id: '6',
+    title: 'Ek Ajnabee Haseena Se',
+    artist: 'Doublemint',
+    duration: 180,
+    audioUrl: '/audio/songs/Doublemint  Ek Ajnabee Haseena Se  #StartSomethingFresh - Doublemint India.mp3',
+    musicUrl: 'https://music.youtube.com/search?q=ek+ajnabee+haseena+se',
+  },
+  {
+    id: '7',
+    title: 'Finding Her',
+    artist: 'Kushagra',
+    duration: 230,
+    audioUrl: '/audio/songs/Finding Her Kushagra 320 Kbps.mp3',
+    musicUrl: 'https://music.youtube.com/search?q=finding+her+kushagra',
+  },
+  {
+    id: '8',
+    title: 'Iraaday',
+    artist: 'Bollywood',
+    duration: 260,
+    audioUrl: '/audio/songs/Iraaday Song Download(OyeDjSurendra.Com).mp3',
+    musicUrl: 'https://music.youtube.com/search?q=iraaday+song',
+  },
+  {
+    id: '9',
+    title: 'Ishq',
+    artist: 'Romantic',
+    duration: 250,
+    audioUrl: '/audio/songs/Ishq-(SambalpuriStar.In).mp3',
+    musicUrl: 'https://music.youtube.com/search?q=ishq+song',
+  },
+  {
+    id: '10',
+    title: 'Mere Haath Mein',
+    artist: 'Fanaa',
+    duration: 295,
+    audioUrl: '/audio/songs/Mere Haath Mein Fanaa 320 Kbps.mp3',
+    musicUrl: 'https://music.youtube.com/search?q=mere+haath+mein+fanaa',
+  },
+  {
+    id: '11',
+    title: 'Humein Tumse Pyar Kitna',
+    artist: 'SANAM',
+    duration: 275,
+    audioUrl: '/audio/songs/SANAM - Humein Tumse Pyar Kitna - Sanam.mp3',
+    musicUrl: 'https://music.youtube.com/watch?v=jRdkrDk0BQ0',
+  },
+  {
+    id: '12',
+    title: 'Soch',
+    artist: 'Harrdy Sandhu',
+    duration: 235,
+    audioUrl: '/audio/songs/Soch Harrdy Sandhu 320 Kbps.mp3',
+    musicUrl: 'https://music.youtube.com/watch?v=VJJRKRhZs9Y',
+  },
+  {
+    id: '13',
+    title: 'Teri Yeh Baatein',
+    artist: 'Kho Gaye Hum Kahan',
+    duration: 265,
+    audioUrl: '/audio/songs/Teri Yeh Baatein Kho Gaye Hum Kahan 320 Kbps.mp3',
+    musicUrl: 'https://music.youtube.com/search?q=teri+yeh+baatein',
+  },
+  {
+    id: '1',
     title: 'Pal Pal',
     artist: 'Bollywood Romance',
     duration: 285,
     audioUrl: '/audio/songs/Pal Pal(KoshalWorld.Com).mp3',
     musicUrl: 'https://music.youtube.com/search?q=pal+pal+bollywood',
-    significance: 'A beautiful Hindi romantic song that speaks to our hearts ❤️',
   },
 ];
 
@@ -195,6 +272,7 @@ export function SimpleMusicPlayer() {
         document.body.style.overflow = '';
       };
     }
+    return undefined;
   }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
 
   return (

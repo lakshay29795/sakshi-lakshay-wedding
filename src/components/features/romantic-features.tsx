@@ -34,14 +34,14 @@ const romanticFeatures = [
     gradient: 'bg-gradient-to-br from-romantic-gold-light to-romantic-gold',
     delay: 0.3,
   },
-  {
-    icon: Users,
-    title: 'RSVP',
-    description: 'Join us in celebrating our special day filled with love and joy',
-    href: '/rsvp',
-    gradient: 'bg-gradient-to-br from-romantic-sage-light to-romantic-sage',
-    delay: 0.4,
-  },
+  // {
+  //   icon: Users,
+  //   title: 'RSVP',
+  //   description: 'Join us in celebrating our special day filled with love and joy',
+  //   href: '/rsvp',
+  //   gradient: 'bg-gradient-to-br from-romantic-sage-light to-romantic-sage',
+  //   delay: 0.4,
+  // },
   {
     icon: BookOpen,
     title: 'Daily Surprises',

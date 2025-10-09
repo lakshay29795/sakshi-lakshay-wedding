@@ -51,6 +51,24 @@ export const videoMessagesData: VideoMessage[] = [
     videoUrl: '/videos/messages/bestfriend-message.mp4',
     message: 'A message from your closest friend',
     isLocked: false,
+  },
+  {
+    id: '5',
+    name: 'Shivam',
+    relationship: 'Brother',
+    thumbnail: '/images/messages/shivam-thumbnail.jpg',
+    videoUrl: '/videos/messages/shivam-message.mp4',
+    message: 'A message from your closest friend',
+    isLocked: false,
+  },
+  {
+    id: '6',
+    name: 'Chachi',
+    relationship: 'Chachi',
+    thumbnail: '/images/messages/chachi-thumbnail.jpg',
+    videoUrl: '/videos/messages/chachi-message.mp4',
+    message: 'A message from your closest friend',
+    isLocked: false,
   }
   // Add more video messages as needed
 ];

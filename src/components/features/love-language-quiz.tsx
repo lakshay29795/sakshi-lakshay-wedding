@@ -16,6 +16,7 @@ interface QuizQuestion {
     id: string;
     text: string;
     loveLanguage: LoveLanguage;
+    rating: number; // 1 = perfect match (highest), 5 = least match
   }[];
 }
 
@@ -141,73 +142,85 @@ const quizQuestions: QuizQuestion[] = [
     id: 1,
     question: "What makes you feel most appreciated in a relationship?",
     options: [
-      { id: 'a', text: "When my partner tells me they love me", loveLanguage: 'words' },
-      { id: 'b', text: "When my partner helps me with tasks", loveLanguage: 'acts' },
-      { id: 'c', text: "When my partner surprises me with gifts", loveLanguage: 'gifts' },
-      { id: 'd', text: "When my partner spends uninterrupted time with me", loveLanguage: 'time' },
-      { id: 'e', text: "When my partner gives me physical affection", loveLanguage: 'touch' }
+      { id: 'a', text: "When my partner tells me they love me", loveLanguage: 'words', rating: 3 },
+      { id: 'b', text: "When my partner helps me with tasks", loveLanguage: 'acts', rating: 4 },
+      { id: 'c', text: "When my partner surprises me with gifts", loveLanguage: 'gifts', rating: 2 },
+      { id: 'd', text: "When my partner spends uninterrupted time with me", loveLanguage: 'time', rating: 1 },
+      { id: 'e', text: "When my partner gives me physical affection", loveLanguage: 'touch', rating: 1 }
     ]
   },
   {
     id: 2,
     question: "How do you prefer to show love to your partner?",
     options: [
-      { id: 'a', text: "By telling them how much they mean to me", loveLanguage: 'words' },
-      { id: 'b', text: "By doing things to make their life easier", loveLanguage: 'acts' },
-      { id: 'c', text: "By giving them thoughtful presents", loveLanguage: 'gifts' },
-      { id: 'd', text: "By planning special activities together", loveLanguage: 'time' },
-      { id: 'e', text: "By being physically affectionate", loveLanguage: 'touch' }
+      { id: 'a', text: "By telling them how much they mean to me", loveLanguage: 'words', rating: 2 },
+      { id: 'b', text: "By doing things to make their life easier", loveLanguage: 'acts', rating: 4 },
+      { id: 'c', text: "By giving them thoughtful presents", loveLanguage: 'gifts', rating: 3 },
+      { id: 'd', text: "By planning special activities together", loveLanguage: 'time', rating: 1 },
+      { id: 'e', text: "By being physically affectionate", loveLanguage: 'touch', rating: 1 }
     ]
   },
   {
     id: 3,
     question: "What would hurt your feelings the most?",
     options: [
-      { id: 'a', text: "If my partner rarely said loving things to me", loveLanguage: 'words' },
-      { id: 'b', text: "If my partner never helped me when I needed it", loveLanguage: 'acts' },
-      { id: 'c', text: "If my partner forgot important occasions", loveLanguage: 'gifts' },
-      { id: 'd', text: "If my partner was always too busy for me", loveLanguage: 'time' },
-      { id: 'e', text: "If my partner avoided physical closeness", loveLanguage: 'touch' }
+      { id: 'a', text: "If my partner rarely said loving things to me", loveLanguage: 'words', rating: 3 },
+      { id: 'b', text: "If my partner never helped me when I needed it", loveLanguage: 'acts', rating: 4 },
+      { id: 'c', text: "If my partner forgot important occasions", loveLanguage: 'gifts', rating: 2 },
+      { id: 'd', text: "If my partner was always too busy for me", loveLanguage: 'time', rating: 1 },
+      { id: 'e', text: "If my partner avoided physical closeness", loveLanguage: 'touch', rating: 1 }
     ]
   },
   {
     id: 4,
     question: "What's your ideal way to spend a romantic evening?",
     options: [
-      { id: 'a', text: "Having deep, meaningful conversations", loveLanguage: 'words' },
-      { id: 'b', text: "Cooking dinner together", loveLanguage: 'acts' },
-      { id: 'c', text: "Exchanging small, meaningful gifts", loveLanguage: 'gifts' },
-      { id: 'd', text: "Doing an activity we both enjoy", loveLanguage: 'time' },
-      { id: 'e', text: "Cuddling while watching a movie", loveLanguage: 'touch' }
+      { id: 'a', text: "Having deep, meaningful conversations", loveLanguage: 'words', rating: 2 },
+      { id: 'b', text: "Cooking dinner together", loveLanguage: 'acts', rating: 3 },
+      { id: 'c', text: "Exchanging small, meaningful gifts", loveLanguage: 'gifts', rating: 4 },
+      { id: 'd', text: "Doing an activity we both enjoy", loveLanguage: 'time', rating: 1 },
+      { id: 'e', text: "Cuddling while watching a movie", loveLanguage: 'touch', rating: 1 }
     ]
   },
   {
     id: 5,
     question: "What makes you feel most connected to your partner?",
     options: [
-      { id: 'a', text: "When they express their feelings openly", loveLanguage: 'words' },
-      { id: 'b', text: "When they anticipate my needs", loveLanguage: 'acts' },
-      { id: 'c', text: "When they remember what I like", loveLanguage: 'gifts' },
-      { id: 'd', text: "When we share experiences together", loveLanguage: 'time' },
-      { id: 'e', text: "When we're physically close", loveLanguage: 'touch' }
+      { id: 'a', text: "When they express their feelings openly", loveLanguage: 'words', rating: 2 },
+      { id: 'b', text: "When they anticipate my needs", loveLanguage: 'acts', rating: 4 },
+      { id: 'c', text: "When they remember what I like", loveLanguage: 'gifts', rating: 3 },
+      { id: 'd', text: "When we share experiences together", loveLanguage: 'time', rating: 1 },
+      { id: 'e', text: "When we're physically close", loveLanguage: 'touch', rating: 1 }
     ]
   }
 ];
 
 export function LoveLanguageQuiz({ className }: { className?: string }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, LoveLanguage>>({});
+  const [answers, setAnswers] = useState<Record<number, { language: LoveLanguage; rating: number }>>({});
   const [result, setResult] = useState<LoveLanguageResult | null>(null);
+  const [compatibilityScore, setCompatibilityScore] = useState<number>(0);
   const [isCompleted, setIsCompleted] = useState(false);
 
-  const handleAnswer = useCallback((questionId: number, loveLanguage: LoveLanguage) => {
-    const newAnswers = { ...answers, [questionId]: loveLanguage };
+  const handleAnswer = useCallback((questionId: number, loveLanguage: LoveLanguage, rating: number) => {
+    const newAnswers = { ...answers, [questionId]: { language: loveLanguage, rating } };
     setAnswers(newAnswers);
 
     if (currentQuestion < quizQuestions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
     } else {
-      // Calculate result
+      // Calculate compatibility score
+      // Rating 1 = 5 points, Rating 2 = 4 points, ..., Rating 5 = 1 point
+      const totalScore = Object.values(newAnswers).reduce((sum, answer) => {
+        const points = 6 - answer.rating; // Convert rating to points (1->5, 2->4, 3->3, 4->2, 5->1)
+        return sum + points;
+      }, 0);
+      
+      const maxPossibleScore = quizQuestions.length * 5; // All ratings of 1
+      const compatibility = Math.round((totalScore / maxPossibleScore) * 100);
+      setCompatibilityScore(compatibility);
+
+      // Calculate dominant love language for display
       const languageCounts: Record<LoveLanguage, number> = {
         words: 0,
         acts: 0,
@@ -216,8 +229,8 @@ export function LoveLanguageQuiz({ className }: { className?: string }) {
         touch: 0
       };
 
-      Object.values(newAnswers).forEach(language => {
-        languageCounts[language]++;
+      Object.values(newAnswers).forEach(answer => {
+        languageCounts[answer.language]++;
       });
 
       const dominantLanguage = Object.entries(languageCounts).reduce((a, b) => 
@@ -233,12 +246,13 @@ export function LoveLanguageQuiz({ className }: { className?: string }) {
     setCurrentQuestion(0);
     setAnswers({});
     setResult(null);
+    setCompatibilityScore(0);
     setIsCompleted(false);
   }, []);
 
   const shareResult = useCallback(() => {
     if (result) {
-      const text = `I just discovered my love language is ${result.name}! 💕 Take the quiz on Sakshi & Lakshay's wedding website.`;
+      const text = `I just took the Love Language Quiz! My love language is ${result.name} and I have ${compatibilityScore}% compatibility with Lakshay! 💕 Take the quiz on Sakshi & Lakshay's wedding website.`;
       if (navigator.share) {
         navigator.share({
           title: 'My Love Language Result',
@@ -249,7 +263,7 @@ export function LoveLanguageQuiz({ className }: { className?: string }) {
         navigator.clipboard.writeText(text);
       }
     }
-  }, [result]);
+  }, [result, compatibilityScore]);
 
   const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
 
@@ -281,11 +295,33 @@ export function LoveLanguageQuiz({ className }: { className?: string }) {
           </CardHeader>
 
           <CardContent className="p-6 space-y-6">
+            {/* Compatibility Score */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, type: "spring" }}
+              className="text-center bg-gradient-to-br from-rose-50 to-sage-green/10 rounded-2xl p-6 border-2 border-rose-200"
+            >
+              <div className="mb-2">
+                <Heart className="w-8 h-8 text-rose-500 mx-auto mb-2 animate-pulse" />
+                <h3 className="text-sm font-medium text-muted-foreground mb-2">Compatibility Score with Lakshay</h3>
+              </div>
+              <div className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500 mb-2">
+                {compatibilityScore}%
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {compatibilityScore >= 90 ? "Perfect Match! 💕" : 
+                 compatibilityScore >= 75 ? "Amazing Connection! ❤️" :
+                 compatibilityScore >= 60 ? "Great Chemistry! 💖" :
+                 "We complement each other! 💝"}
+              </p>
+            </motion.div>
+
             {/* Description */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: 0.5 }}
               className="text-center"
             >
               <p className="text-muted-foreground leading-relaxed">
@@ -317,7 +353,7 @@ export function LoveLanguageQuiz({ className }: { className?: string }) {
             </motion.div>
 
             {/* Compatibility */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
@@ -338,7 +374,7 @@ export function LoveLanguageQuiz({ className }: { className?: string }) {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </motion.div> */}
 
             {/* Actions */}
             <motion.div
@@ -402,7 +438,7 @@ export function LoveLanguageQuiz({ className }: { className?: string }) {
                 {quizQuestions[currentQuestion].options.map((option) => (
                   <motion.button
                     key={option.id}
-                    onClick={() => handleAnswer(quizQuestions[currentQuestion].id, option.loveLanguage)}
+                    onClick={() => handleAnswer(quizQuestions[currentQuestion].id, option.loveLanguage, option.rating)}
                     className="w-full p-4 text-left rounded-lg border border-gray-200 hover:border-sage-green hover:bg-sage-green/5 transition-all duration-200"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}

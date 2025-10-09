@@ -53,10 +53,10 @@ export function VideoMessages() {
           <Script size="xl" className="mb-4 text-sage-green">
             Messages of Love
           </Script>
-          <Heading size="h1" variant="romantic" className="mb-6">
+          <Heading size="h1" variant="romantic" align="center" className="mb-6">
             Special Video Messages
           </Heading>
-          <Text size="lg" variant="muted" className="max-w-2xl mx-auto">
+          <Text size="lg" variant="muted" align="center" className="max-w-2xl mx-auto">
             Your loved ones have recorded heartfelt messages just for you. Click on each thumbnail to reveal their beautiful words.
           </Text>
         </ScrollReveal>
@@ -184,7 +184,7 @@ function VideoThumbnail({ video, isRevealed, onClick }: VideoThumbnailProps) {
 
 interface VideoModalProps {
   video: VideoMessage;
-  videoRef: React.RefObject<HTMLVideoElement>;
+  videoRef: React.RefObject<HTMLVideoElement | null>;
   onClose: () => void;
 }
 
@@ -238,7 +238,7 @@ function VideoModal({ video, videoRef, onClose }: VideoModalProps) {
             className="w-full h-full"
             controls
             autoPlay
-            onError={(e) => {
+            onError={() => {
               console.error('Video failed to load:', video.videoUrl);
             }}
           >
