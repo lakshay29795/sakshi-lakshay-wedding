@@ -142,54 +142,54 @@ const quizQuestions: QuizQuestion[] = [
     id: 1,
     question: "What makes you feel most appreciated in a relationship?",
     options: [
-      { id: 'a', text: "When my partner tells me they love me", loveLanguage: 'words', rating: 3 },
-      { id: 'b', text: "When my partner helps me with tasks", loveLanguage: 'acts', rating: 4 },
-      { id: 'c', text: "When my partner surprises me with gifts", loveLanguage: 'gifts', rating: 2 },
-      { id: 'd', text: "When my partner spends uninterrupted time with me", loveLanguage: 'time', rating: 1 },
-      { id: 'e', text: "When my partner gives me physical affection", loveLanguage: 'touch', rating: 1 }
+      { id: 'a', text: "When he tells me he loves me", loveLanguage: 'words', rating: 2 },
+      { id: 'b', text: "When he helps me with tasks", loveLanguage: 'acts', rating: 4 },
+      { id: 'c', text: "When he surprises me with gifts", loveLanguage: 'gifts', rating: 3 },
+      { id: 'd', text: "When he spends uninterrupted time with me", loveLanguage: 'time', rating: 5 },
+      { id: 'e', text: "When he gives me physical affection", loveLanguage: 'touch', rating: 1 }
     ]
   },
   {
     id: 2,
-    question: "How do you prefer to show love to your partner?",
+    question: "How do you prefer to show love to him?",
     options: [
-      { id: 'a', text: "By telling them how much they mean to me", loveLanguage: 'words', rating: 2 },
-      { id: 'b', text: "By doing things to make their life easier", loveLanguage: 'acts', rating: 4 },
-      { id: 'c', text: "By giving them thoughtful presents", loveLanguage: 'gifts', rating: 3 },
-      { id: 'd', text: "By planning special activities together", loveLanguage: 'time', rating: 1 },
-      { id: 'e', text: "By being physically affectionate", loveLanguage: 'touch', rating: 1 }
+      { id: 'a', text: "By telling him how much he means to me", loveLanguage: 'words', rating: 1 },
+      { id: 'b', text: "By doing things to make his life easier", loveLanguage: 'acts', rating: 5 },
+      { id: 'c', text: "By giving him thoughtful presents", loveLanguage: 'gifts', rating: 4 },
+      { id: 'd', text: "By planning special activities together", loveLanguage: 'time', rating: 3 },
+      { id: 'e', text: "By being physically affectionate", loveLanguage: 'touch', rating: 2 }
     ]
   },
   {
     id: 3,
     question: "What would hurt your feelings the most?",
     options: [
-      { id: 'a', text: "If my partner rarely said loving things to me", loveLanguage: 'words', rating: 3 },
-      { id: 'b', text: "If my partner never helped me when I needed it", loveLanguage: 'acts', rating: 4 },
-      { id: 'c', text: "If my partner forgot important occasions", loveLanguage: 'gifts', rating: 2 },
-      { id: 'd', text: "If my partner was always too busy for me", loveLanguage: 'time', rating: 1 },
-      { id: 'e', text: "If my partner avoided physical closeness", loveLanguage: 'touch', rating: 1 }
+      { id: 'a', text: "If he rarely said loving things to me", loveLanguage: 'words', rating: 3 },
+      { id: 'b', text: "If my partner never helped me when I needed it", loveLanguage: 'acts', rating: 5 },
+      { id: 'c', text: "If he forgot important occasions", loveLanguage: 'gifts', rating: 4 },
+      { id: 'd', text: "If he was always too busy for me", loveLanguage: 'time', rating: 1 },
+      { id: 'e', text: "If he avoided physical closeness", loveLanguage: 'touch', rating: 2 }
     ]
   },
   {
     id: 4,
     question: "What's your ideal way to spend a romantic evening?",
     options: [
-      { id: 'a', text: "Having deep, meaningful conversations", loveLanguage: 'words', rating: 2 },
-      { id: 'b', text: "Cooking dinner together", loveLanguage: 'acts', rating: 3 },
+      { id: 'a', text: "Having deep, meaningful conversations", loveLanguage: 'words', rating: 3 },
+      { id: 'b', text: "Cooking dinner together", loveLanguage: 'acts', rating: 1 },
       { id: 'c', text: "Exchanging small, meaningful gifts", loveLanguage: 'gifts', rating: 4 },
-      { id: 'd', text: "Doing an activity we both enjoy", loveLanguage: 'time', rating: 1 },
-      { id: 'e', text: "Cuddling while watching a movie", loveLanguage: 'touch', rating: 1 }
+      { id: 'd', text: "Doing an activity we both enjoy", loveLanguage: 'time', rating: 5 },
+      { id: 'e', text: "Cuddling while watching a movie", loveLanguage: 'touch', rating: 2 }
     ]
   },
   {
     id: 5,
-    question: "What makes you feel most connected to your partner?",
+    question: "What makes you feel most connected to him?",
     options: [
-      { id: 'a', text: "When they express their feelings openly", loveLanguage: 'words', rating: 2 },
-      { id: 'b', text: "When they anticipate my needs", loveLanguage: 'acts', rating: 4 },
-      { id: 'c', text: "When they remember what I like", loveLanguage: 'gifts', rating: 3 },
-      { id: 'd', text: "When we share experiences together", loveLanguage: 'time', rating: 1 },
+      { id: 'a', text: "When he expresses his feelings openly", loveLanguage: 'words', rating: 2 },
+      { id: 'b', text: "When he anticipates my needs", loveLanguage: 'acts', rating: 3 },
+      { id: 'c', text: "When he remembers what I like", loveLanguage: 'gifts', rating: 4 },
+      { id: 'd', text: "When we share experiences together", loveLanguage: 'time', rating: 5 },
       { id: 'e', text: "When we're physically close", loveLanguage: 'touch', rating: 1 }
     ]
   }
