@@ -6,7 +6,7 @@ import { Calendar, Heart, Star, Gift, Sparkles, Lock, Unlock } from 'lucide-reac
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { OptimizedImage } from '@/components/ui/optimized-image';
+import Image from 'next/image';
 import { weddingInfo } from '@/data/wedding-info';
 
 interface DailyReveal {
@@ -29,10 +29,10 @@ const generateDailyReveals = (): DailyReveal[] => {
   const revealData = [
     // 30 days before
     {
-      title: "Our First Date",
-      description: "Where it all began...",
-      image: "/images/daily-reveals/first-date.jpg",
-      message: "Remember our first coffee date? You were so nervous, you ordered three different drinks! 😄 That's when I knew you were special.",
+      title: "Our Temple visit",
+      description: "place which gives you peace",
+      image: "/images/daily-reveals/first.jpg",
+      message: "I may not believe in God, but I truly believe in us. You are my faith, my reason, and my calm. I promise to do everything I can to make you happy — not out of expectation, but out of love. And I know you’ll do the same. With time, we’ll grow together, finding joy in the little things and creating our own beautiful world filled with love and understanding.",
       category: 'memory' as const,
       isSpecial: true
     },
@@ -423,11 +423,13 @@ export function DailyReveals({ className }: { className?: string }) {
                     {/* Image */}
                     <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden">
                       {unlocked ? (
-                        <OptimizedImage
+                        <Image
                           src={reveal.image}
                           alt={reveal.title}
                           fill
-                          className="object-cover"
+                          className="object-contain"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          unoptimized
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
@@ -518,11 +520,13 @@ export function DailyReveals({ className }: { className?: string }) {
             >
               {/* Image */}
               <div className="aspect-video relative">
-                <OptimizedImage
+                <Image
                   src={selectedReveal.image}
                   alt={selectedReveal.title}
                   fill
-                  className="object-cover"
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 768px"
+                  unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 

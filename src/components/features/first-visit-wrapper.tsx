@@ -26,7 +26,7 @@ export function FirstVisitWrapper({ children }: FirstVisitWrapperProps) {
 
   const handleReveal = () => {
     // Mark as visited
-    localStorage.setItem(STORAGE_KEY, 'true');
+    localStorage.setItem(STORAGE_KEY, 'false');
     setHasVisited(true);
     
     // Small delay before showing content for smooth transition

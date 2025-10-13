@@ -17,7 +17,7 @@ export function hasUserVisited(): boolean {
  */
 export function markAsVisited(): void {
   if (typeof window === 'undefined') return;
-  localStorage.setItem(STORAGE_KEY, 'true');
+  localStorage.setItem(STORAGE_KEY, 'false');
 }
 
 /**
