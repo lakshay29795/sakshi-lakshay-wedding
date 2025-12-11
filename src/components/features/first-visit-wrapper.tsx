@@ -8,26 +8,14 @@ interface FirstVisitWrapperProps {
   children: React.ReactNode;
 }
 
-const STORAGE_KEY = 'sakshi-lakshay-wedding-visited';
-
 export function FirstVisitWrapper({ children }: FirstVisitWrapperProps) {
-  const [hasVisited, setHasVisited] = React.useState<boolean | null>(null);
+  // Always show gift video on every page load
+  const [showGiftVideo, setShowGiftVideo] = React.useState(true);
   const [showContent, setShowContent] = React.useState(false);
 
-  // Check if user has visited before
-  React.useEffect(() => {
-    const visited = localStorage.getItem(STORAGE_KEY);
-    setHasVisited(visited === 'true');
-    
-    if (visited === 'true') {
-      setShowContent(true);
-    }
-  }, []);
-
   const handleReveal = () => {
-    // Mark as visited
-    localStorage.setItem(STORAGE_KEY, 'false');
-    setHasVisited(true);
+    // Hide gift video
+    setShowGiftVideo(false);
     
     // Small delay before showing content for smooth transition
     setTimeout(() => {
@@ -35,22 +23,10 @@ export function FirstVisitWrapper({ children }: FirstVisitWrapperProps) {
     }, 500);
   };
 
-  // Show nothing while checking localStorage (prevents flash)
-  if (hasVisited === null) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blush-pink/10 via-white to-sage-green/10">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-sage-green/20 border-t-sage-green rounded-full animate-spin" />
-          <p className="text-gray-500 text-sm">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       <AnimatePresence mode="wait">
-        {!hasVisited && (
+        {showGiftVideo && (
           <motion.div
             key="gift-reveal"
             initial={{ opacity: 1 }}
