@@ -6,6 +6,7 @@ import { Section } from '@/components/ui/section';
 import { Heading, Text, Script } from '@/components/ui/typography';
 import { Heart, Instagram, Facebook, Mail, MapPin, Calendar } from 'lucide-react';
 import { ScrollReveal } from '@/components/animations/scroll-reveal';
+import { websiteConfig } from '@/config/website.config';
 
 interface FooterProps {
   className?: string;
@@ -25,25 +26,28 @@ const importantLinks = [
   { href: '/travel', label: 'Travel Info' },
 ];
 
-const socialLinks = [
-  {
-    href: 'https://instagram.com/sarahandmichael',
-    label: 'Instagram',
-    icon: Instagram,
-  },
-  {
-    href: 'https://facebook.com/sarahandmichael',
-    label: 'Facebook',
-    icon: Facebook,
-  },
-  {
-    href: 'mailto:hello@sarahandmichael.com',
-    label: 'Email',
-    icon: Mail,
-  },
-];
+// Social links moved inside component to use websiteConfig
 
 export function Footer({ className }: FooterProps) {
+  // Social links using config
+  const socialLinks = [
+    {
+      href: websiteConfig.social.instagramUrl,
+      label: 'Instagram',
+      icon: Instagram,
+    },
+    {
+      href: websiteConfig.social.facebookUrl,
+      label: 'Facebook',
+      icon: Facebook,
+    },
+    {
+      href: `mailto:${websiteConfig.contact.email}`,
+      label: 'Email',
+      icon: Mail,
+    },
+  ];
+
   return (
     <footer className={cn('bg-sage-green/5 border-t border-border/50', className)}>
       <Section padding="lg">
@@ -55,7 +59,7 @@ export function Footer({ className }: FooterProps) {
                 <div className="flex items-center space-x-2">
                   <Heart className="h-6 w-6 text-sage-green" />
                   <Script size="lg" className="text-sage-green">
-                    Sakshi & Lakshay
+                    {websiteConfig.couple.bride.name} & {websiteConfig.couple.groom.name}
                   </Script>
                 </div>
                 <Text variant="muted" className="max-w-sm">
@@ -63,11 +67,11 @@ export function Footer({ className }: FooterProps) {
                 </Text>
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span>November 12, 2025</span>
+                  <span>{new Date(websiteConfig.wedding.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <MapPin className="h-4 w-4" />
-                  <span>Pitampura, Delhi</span>
+                  <span>{websiteConfig.wedding.venue.name}</span>
                 </div>
               </div>
             </ScrollReveal>
@@ -148,7 +152,7 @@ export function Footer({ className }: FooterProps) {
               <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                 <div className="flex items-center space-x-4">
                   <Text size="sm" variant="muted">
-                    © 2024 Sakshi & Lakshay. Made with
+                    © {new Date().getFullYear()} {websiteConfig.couple.bride.name} & {websiteConfig.couple.groom.name}. Made with
                   </Text>
                   <Heart className="h-4 w-4 text-sage-green fill-current" />
                 </div>

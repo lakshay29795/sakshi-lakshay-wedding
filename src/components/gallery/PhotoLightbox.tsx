@@ -7,6 +7,7 @@ import { X, ChevronLeft, ChevronRight, Download, Share2, Heart } from 'lucide-re
 import type { PhotoGalleryItem } from '@/types';
 import { formatDate } from '@/lib/utils';
 import { cn } from '@/lib/utils';
+import { websiteConfig } from '@/config/website.config';
 
 interface PhotoLightboxProps {
   photo: PhotoGalleryItem | null;
@@ -69,7 +70,7 @@ export function PhotoLightbox({
       try {
         await navigator.share({
           title: photo.caption || photo.alt,
-          text: `Check out this beautiful photo from Sakshi & Lakshay's wedding!`,
+          text: `Check out this beautiful photo from ${websiteConfig.couple.bride.name} & ${websiteConfig.couple.groom.name}'s wedding!`,
           url: window.location.href,
         });
       } catch (error) {

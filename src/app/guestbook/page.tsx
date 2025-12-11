@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { websiteConfig } from '@/config/website.config';
 
 export default function GuestBookPage() {
   const [showForm, setShowForm] = useState(false);
@@ -261,7 +262,7 @@ export default function GuestBookPage() {
             >
               <div className="flex items-center justify-center space-x-2 text-sage-green mb-4">
                 <Heart className="w-5 h-5" />
-                <span className="font-serif text-lg">Sakshi & Lakshay</span>
+                <span className="font-serif text-lg">{websiteConfig.couple.bride.name} & {websiteConfig.couple.groom.name}</span>
                 <Heart className="w-5 h-5" />
               </div>
               <p className="text-muted-foreground italic">

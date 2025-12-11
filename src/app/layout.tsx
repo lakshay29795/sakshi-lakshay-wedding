@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { PWAInstallPrompt, PWAInstallButton } from "@/components/pwa/PWAInstallPrompt";
 import { FirstVisitWrapper } from "@/components/features/first-visit-wrapper";
+import { websiteConfig } from "@/config/website.config";
 
 // Font configurations
 const inter = Inter({
@@ -27,26 +28,30 @@ const dancing = Dancing_Script({
   display: "swap",
 });
 
+const siteTitle = `${websiteConfig.couple.bride.name} & ${websiteConfig.couple.groom.name}'s Wedding`;
+const coupleNames = `${websiteConfig.couple.bride.name} & ${websiteConfig.couple.groom.name}`;
+const weddingDate = new Date(websiteConfig.wedding.date);
+const formattedDate = weddingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
 export const metadata: Metadata = {
   title: {
-    default: "Sakshi & Lakshay's Wedding",
-    template: "%s | Sakshi & Lakshay's Wedding",
+    default: siteTitle,
+    template: `%s | ${siteTitle}`,
   },
-  description: "Join us as we celebrate our love story and begin our journey as husband and wife on November 12, 2025 at Pitampura, Delhi.",
+  description: `Join us as we celebrate our love story and begin our journey as husband and wife on ${formattedDate} at ${websiteConfig.wedding.venue.name}.`,
   keywords: [
     "wedding",
-    "Sakshi Johnson",
-    "Lakshay Smith",
-    "November 2025",
-    "Pitampura",
-    "Delhi",
+    `${websiteConfig.couple.bride.fullName}`,
+    `${websiteConfig.couple.groom.fullName}`,
+    weddingDate.getFullYear().toString(),
+    websiteConfig.wedding.venue.name,
     "wedding invitation",
     "RSVP",
     "love story",
   ],
-  authors: [{ name: "Sakshi & Lakshay" }],
-  creator: "Sakshi & Lakshay",
-  publisher: "Sakshi & Lakshay",
+  authors: [{ name: coupleNames }],
+  creator: coupleNames,
+  publisher: coupleNames,
   formatDetection: {
     email: false,
     address: false,
@@ -60,21 +65,21 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Sakshi & Lakshay's Wedding",
-    description: "Join us as we celebrate our love story and begin our journey as husband and wife on November 12, 2025.",
-    siteName: "Sakshi & Lakshay's Wedding",
+    title: siteTitle,
+    description: `Join us as we celebrate our love story and begin our journey as husband and wife on ${formattedDate}.`,
+    siteName: siteTitle,
     images: [
       {
         url: "/images/couple/hero-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Sakshi & Lakshay",
+        alt: coupleNames,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sakshi & Lakshay's Wedding",
+    title: siteTitle,
     description: "Join us as we celebrate our love story and begin our journey as husband and wife.",
     images: ["/images/couple/hero-image.jpg"],
   },
@@ -130,7 +135,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Sakshi & Lakshay" />
+        <meta name="apple-mobile-web-app-title" content={coupleNames} />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#A8B5A0" />
         <meta name="msapplication-config" content="/browserconfig.xml" />

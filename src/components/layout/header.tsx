@@ -9,6 +9,7 @@ import { WeddingButton } from '@/components/ui/wedding-button';
 import { Menu, X, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PWAStatusCompact } from '@/components/pwa/PWAStatus';
+import { websiteConfig } from '@/config/website.config';
 
 interface HeaderProps {
   className?: string;
@@ -79,10 +80,10 @@ export function Header({ className }: HeaderProps) {
             </motion.div>
             <div className="flex flex-col">
               <span className="romantic-script text-lg leading-none text-romantic-charcoal">
-                Sakshi & Lakshay
+                {websiteConfig.couple.bride.name} & {websiteConfig.couple.groom.name}
               </span>
               {/* <span className="romantic-body-text text-xs leading-none text-romantic-charcoal-light">
-                November 12, 2025
+                {new Date(websiteConfig.wedding.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
               </span> */}
             </div>
           </Link>

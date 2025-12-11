@@ -28,7 +28,9 @@
       "@/lib/*": ["./src/lib/*"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/types/*": ["./src/types/*"],
-      "@/data/*": ["./src/data/*"]
+      "@/data/*": ["./src/data/*"],
+      "@/config": ["./config/index.ts"],
+      "@/config/*": ["./config/*"]
     }
   },
   "include": [
@@ -37,7 +39,8 @@
     "**/*.tsx", 
     ".next/types/**/*.ts",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "config/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

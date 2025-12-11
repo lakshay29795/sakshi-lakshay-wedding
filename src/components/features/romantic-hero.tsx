@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Heart, Calendar, MapPin, ArrowDown } from 'lucide-react';
 import { weddingInfo } from '@/data/wedding-info';
+import { websiteConfig } from '@/config/website.config';
 
 interface RomanticHeroProps {
   className?: string;
@@ -35,7 +36,7 @@ export function RomanticHero({ className }: RomanticHeroProps) {
       >
         <img 
           src="/images/couple/celestial-hero.jpg"
-          alt="Sakshi and Lakshay - Forever & Always"
+          alt={`${websiteConfig.couple.bride.name} and ${websiteConfig.couple.groom.name} - Forever & Always`}
           className="w-full h-full object-cover"
         />
       </motion.div>

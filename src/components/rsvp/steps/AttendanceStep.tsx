@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { FormField, FormItem, FormControl } from '@/components/ui/form';
 import { cn } from '@/lib/utils';
 import type { RSVPFormInput } from '@/lib/validations/rsvp';
+import { websiteConfig } from '@/config/website.config';
 
 interface AttendanceStepProps {
   form: UseFormReturn<RSVPFormInput>;
@@ -65,7 +66,7 @@ export function AttendanceStep({ form, isAttending, className }: AttendanceStepP
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center space-x-2 text-sage-green">
               <Heart className="w-5 h-5" />
-              <h4 className="font-serif text-lg">Sakshi & Lakshay's Wedding</h4>
+              <h4 className="font-serif text-lg">{websiteConfig.couple.bride.name} & {websiteConfig.couple.groom.name}'s Wedding</h4>
               <Heart className="w-5 h-5" />
             </div>
             

@@ -1,6 +1,29 @@
-# 💕 Sakshi & Lakshay's Wedding Website
+# 💕 Wedding Website - Fully Customizable Template
 
-A beautiful, modern wedding website built with Next.js, featuring real-time guest book, RSVP management, and PWA capabilities.
+A beautiful, modern wedding website built with Next.js, featuring **easy configuration**, real-time guest book, RSVP management, and PWA capabilities.
+
+## ✨ NEW: Fully Configurable!
+
+🎉 **This website is now 100% customizable through simple configuration files!**
+
+**No coding required** - Just update config files with your details:
+- 👰🤵 Couple names and photos
+- 📅 Wedding date and venue
+- 💕 Your love story
+- 📸 Photo galleries
+- 🎥 Video messages
+- 🎯 Quiz questions
+- 📆 Daily reveals
+
+### 🚀 Quick Start
+
+1. **Update your information** in `/config/website.config.ts`
+2. **Add your photos** to `/public/images/`
+3. **Customize content** in `/config/content.config.ts`
+4. **Run**: `npm run dev`
+
+**📖 See [QUICK_START.md](./QUICK_START.md) for 5-minute setup guide**
+**📚 See [CONFIGURATION_GUIDE.md](./CONFIGURATION_GUIDE.md) for complete documentation**
 
 ## 🌟 Features
 

@@ -1,9 +1,11 @@
 /**
  * Video Messages Data
  * 
- * This file contains all the video messages from family members.
- * Each message includes a thumbnail image and video URL.
+ * This file now imports from the centralized configuration.
+ * To customize, edit /config/content.config.ts
  */
+
+import { contentConfig } from '@/config/content.config';
 
 export interface VideoMessage {
   id: string;
@@ -15,7 +17,11 @@ export interface VideoMessage {
   isLocked?: boolean; // Optional: lock until a specific date/condition
 }
 
-export const videoMessagesData: VideoMessage[] = [
+// Import video messages from content config
+export const videoMessagesData: VideoMessage[] = contentConfig.videoMessages;
+
+// Legacy data (kept for backward compatibility)
+const legacyVideoMessages: VideoMessage[] = [
   {
     id: '1',
     name: 'Mom',

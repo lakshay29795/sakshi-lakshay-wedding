@@ -152,10 +152,16 @@ const nextConfig: NextConfig = {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    domains: [
-      'localhost',
-      'firebasestorage.googleapis.com',
-      'storage.googleapis.com',
+    // Allow all external domains for demo/template use
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**', // Wildcard - allows ALL domains
+      },
+      {
+        protocol: 'http',
+        hostname: '**', // Allows HTTP too (for development)
+      },
     ],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

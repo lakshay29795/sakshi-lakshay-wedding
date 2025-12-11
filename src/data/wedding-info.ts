@@ -1,28 +1,38 @@
+/**
+ * WEDDING INFO
+ * 
+ * This file now imports from the centralized configuration.
+ * To customize, edit /config/website.config.ts and /config/content.config.ts
+ */
+
 import { WeddingCouple, TimelineEvent } from '@/types';
+import { websiteConfig } from '@/config/website.config';
+import { contentConfig } from '@/config/content.config';
 
 export const weddingInfo: WeddingCouple = {
   bride: {
-    name: 'Sakshi',
-    fullName: 'Sakshi Elizabeth Johnson',
-    photo: '/images/couple/bride.jpg',
+    name: websiteConfig.couple.bride.name,
+    fullName: websiteConfig.couple.bride.fullName,
+    photo: websiteConfig.couple.bride.photo,
   },
   groom: {
-    name: 'Lakshay',
-    fullName: 'Lakshay David Smith',
-    photo: '/images/couple/groom.jpg',
+    name: websiteConfig.couple.groom.name,
+    fullName: websiteConfig.couple.groom.fullName,
+    photo: websiteConfig.couple.groom.photo,
   },
-  weddingDate: new Date('2025-11-12T16:00:00'),
+  weddingDate: new Date(websiteConfig.wedding.date),
   venue: {
-    name: 'Pitampura, Delhi',
-    address: 'Pitampura, New Delhi, India',
-    coordinates: {
-      lat: 28.7041,
-      lng: 77.1025,
-    },
+    name: websiteConfig.wedding.venue.name,
+    address: websiteConfig.wedding.venue.address,
+    coordinates: websiteConfig.wedding.venue.coordinates,
   },
 };
 
-export const relationshipTimeline: TimelineEvent[] = [
+// Import timeline from content config
+export const relationshipTimeline: TimelineEvent[] = contentConfig.timeline as TimelineEvent[];
+
+// Legacy timeline data (kept for backward compatibility, but use contentConfig.timeline instead)
+const legacyTimeline: TimelineEvent[] = [
   {
     id: '1',
     date: new Date('2018-03-14'),
@@ -160,7 +170,11 @@ export const relationshipTimeline: TimelineEvent[] = [
   },
 ];
 
-export const weddingSchedule = [
+// Import schedule from website config
+export const weddingSchedule = websiteConfig.wedding.schedule;
+
+// Legacy schedule data (kept for backward compatibility)
+const legacySchedule = [
   {
     time: '3:00 PM',
     event: 'Guest Arrival & Cocktail Hour',

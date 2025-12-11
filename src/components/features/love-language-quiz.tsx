@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { websiteConfig } from '@/config/website.config';
 
 interface QuizQuestion {
   id: number;
@@ -252,7 +253,7 @@ export function LoveLanguageQuiz({ className }: { className?: string }) {
 
   const shareResult = useCallback(() => {
     if (result) {
-      const text = `I just took the Love Language Quiz! My love language is ${result.name} and I have ${compatibilityScore}% compatibility with Lakshay! 💕 Take the quiz on Sakshi & Lakshay's wedding website.`;
+      const text = `I just took the Love Language Quiz! My love language is ${result.name} and I have ${compatibilityScore}% compatibility with ${websiteConfig.couple.groom.name}! 💕 Take the quiz on ${websiteConfig.couple.bride.name} & ${websiteConfig.couple.groom.name}'s wedding website.`;
       if (navigator.share) {
         navigator.share({
           title: 'My Love Language Result',
@@ -304,7 +305,7 @@ export function LoveLanguageQuiz({ className }: { className?: string }) {
             >
               <div className="mb-2">
                 <Heart className="w-8 h-8 text-rose-500 mx-auto mb-2 animate-pulse" />
-                <h3 className="text-sm font-medium text-muted-foreground mb-2">Compatibility Score with Lakshay</h3>
+                <h3 className="text-sm font-medium text-muted-foreground mb-2">Compatibility Score with {websiteConfig.couple.groom.name}</h3>
               </div>
               <div className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500 mb-2">
                 {compatibilityScore}%

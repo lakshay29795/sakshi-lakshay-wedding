@@ -67,7 +67,7 @@ export function PersonalizedHero({ className }: PersonalizedHeroProps) {
         <div className="absolute inset-0 bg-gradient-to-br from-romantic-blush-light via-romantic-lavender-light to-romantic-cream">
           <img 
             src="/images/couple/celestial-hero.jpg"
-            alt="Sakshi and Lakshay"
+            alt={`${weddingInfo.bride.name} and ${weddingInfo.groom.name}`}
             className="w-full h-full object-cover opacity-30 mix-blend-multiply"
             onError={(e) => {
               console.log('Image failed to load');

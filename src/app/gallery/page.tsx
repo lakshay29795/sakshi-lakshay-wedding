@@ -3,20 +3,24 @@ import { Metadata } from 'next';
 import { Container } from '@/components/ui/container';
 import { Heading, Text } from '@/components/ui/typography';
 import { PhotoGallery } from '@/components/gallery/PhotoGallery';
-import { galleryPhotos } from '@/data/gallery-data-generated';
+import { galleryPhotos } from '@/data/gallery-data';
+import { websiteConfig } from '@/config/website.config';
+
+const siteTitle = `${websiteConfig.couple.bride.name} & ${websiteConfig.couple.groom.name}'s Wedding`;
+const coupleNames = `${websiteConfig.couple.bride.name} and ${websiteConfig.couple.groom.name}`;
 
 export const metadata: Metadata = {
-  title: 'Photo Gallery | Sakshi & Lakshay\'s Wedding',
+  title: `Photo Gallery | ${siteTitle}`,
   description: 'Browse through our favorite moments and memories leading up to our special day.',
   openGraph: {
-    title: 'Photo Gallery | Sakshi & Lakshay\'s Wedding',
+    title: `Photo Gallery | ${siteTitle}`,
     description: 'Browse through our favorite moments and memories leading up to our special day.',
     images: [
       {
         url: '/images/gallery/engagement-1.jpg',
         width: 800,
         height: 600,
-        alt: 'Sakshi and Lakshay engagement photo',
+        alt: `${coupleNames} engagement photo`,
       },
     ],
   },
@@ -68,7 +72,7 @@ export default function GalleryPage() {
       {/* Call to Action */}
       <section className="py-16 bg-sage-green/5">
         <Container size="md" className="text-center">
-          <Heading size="lg" align="center" className="mb-4">
+          <Heading size="h2" align="center" className="mb-4">
             Share Your Photos
           </Heading>
           <Text variant="muted" align="center" className="mb-8">
@@ -76,13 +80,13 @@ export default function GalleryPage() {
           </Text>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:sarah.michael.wedding@example.com?subject=Photo Submission"
+              href={`mailto:${websiteConfig.contact.email}?subject=Photo Submission`}
               className="wedding-button"
             >
               Email Us Photos
             </a>
             <a
-              href="https://www.instagram.com/taashi.surbhi/followers/"
+              href={websiteConfig.social.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="wedding-button-secondary"

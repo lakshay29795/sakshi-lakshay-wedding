@@ -13,6 +13,7 @@ import { FadeIn } from '@/components/animations/fade-in';
 import { motion } from 'framer-motion';
 import { Heart, Calendar, MapPin, ChevronDown } from 'lucide-react';
 import { weddingInfo } from '@/data/wedding-info';
+import { websiteConfig } from '@/config/website.config';
 
 interface HeroSectionProps {
   className?: string;
@@ -40,7 +41,7 @@ export function HeroSection({ className }: HeroSectionProps) {
         <div className="absolute inset-0">
           <HeroImage
             src="/images/couple/hero-bg.jpg"
-            alt="Sakshi and Lakshay"
+            alt={`${websiteConfig.couple.bride.name} and ${websiteConfig.couple.groom.name}`}
             priority={true}
             overlay={true}
             overlayOpacity={0.2}
@@ -51,7 +52,7 @@ export function HeroSection({ className }: HeroSectionProps) {
               <div className="absolute inset-0">
                 <img 
                   src="/images/couple/hero-placeholder.svg" 
-                  alt="Sakshi and Lakshay" 
+                  alt={`${websiteConfig.couple.bride.name} and ${websiteConfig.couple.groom.name}`}
                   className="w-full h-full object-cover"
                 />
               </div>
