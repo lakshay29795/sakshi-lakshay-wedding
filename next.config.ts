@@ -240,7 +240,7 @@ const nextConfig: NextConfig = {
 // PWA Configuration
 const pwaConfig = withPWA({
   dest: 'public',
-  disable: process.env.NODE_ENV === 'development',
+  disable: process.env.NODE_ENV === 'development' || process.env.VERCEL === '1',
   register: true,
   skipWaiting: true,
   runtimeCaching: [
@@ -375,4 +375,10 @@ const pwaConfig = withPWA({
   ],
 });
 
-export default pwaConfig(nextConfig);
+// Disable PWA for Vercel builds to avoid build errors
+// Enable PWA only for local builds if needed
+const finalConfig = process.env.VERCEL || process.env.CI 
+  ? nextConfig 
+  : pwaConfig(nextConfig);
+
+export default finalConfig;
