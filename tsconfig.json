@@ -49,6 +49,7 @@
         "./config/index.ts"
       ],
       "@/config/*": [
+        "./src/config/*",
         "./config/*"
       ]
     }
