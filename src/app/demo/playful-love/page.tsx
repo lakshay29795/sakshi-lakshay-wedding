@@ -1,15 +1,50 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Heart, Sparkles, Gift, SmileIcon as Smile, Pizza, Star, Check, X } from 'lucide-react';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Heart, Sparkles, Gift, Calendar, Check, X, Music, Camera, Zap, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { playfulLoveTheme } from '@/config/themes/playful-love.config';
+import { useState, useEffect } from 'react';
 
 export default function PlayfulLovePage() {
   const { demoContent, colors } = playfulLoveTheme;
+  const [fortuneResult, setFortuneResult] = useState<string | null>(null);
+  const [selectedFeature, setSelectedFeature] = useState<any>(null);
+  const [selectedTimelineEvent, setSelectedTimelineEvent] = useState<any>(null);
+
+  const getRandomFortune = () => {
+    const fortunes = demoContent.games.fortuneTeller.options;
+    const random = fortunes[Math.floor(Math.random() * fortunes.length)];
+    setFortuneResult(random);
+  };
+
+  // Lock body scroll when timeline modal is open
+  useEffect(() => {
+    if (selectedTimelineEvent) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedTimelineEvent]);
+
+  // Lock body scroll when feature modal is open
+  useEffect(() => {
+    if (selectedFeature) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedFeature]);
 
   return (
     <div className="min-h-screen" 
@@ -23,7 +58,7 @@ export default function PlayfulLovePage() {
         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
           <Badge className="bg-gradient-to-r from-yellow-200 to-orange-200 text-orange-700 border-yellow-400 text-sm font-bold">
             <Sparkles className="h-3 w-3 mr-1" />
-            🎉 Demo Mode - Playful Love Theme 🎈
+            🎉 Demo Mode - {playfulLoveTheme.name} 🎈
           </Badge>
           <div className="flex gap-3">
             <Button variant="outline" size="sm" className="border-orange-300 border-2" asChild>
@@ -48,29 +83,31 @@ export default function PlayfulLovePage() {
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">
         {/* Confetti background */}
-        <div className="absolute inset-0 overflow-hidden">
-          {colors.rainbow.map((color, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-4 h-4 rounded-full"
-              style={{ backgroundColor: color }}
-              animate={{
-                y: [-100, window.innerHeight + 100],
-                x: [Math.random() * 100, Math.random() * 100],
-                rotate: [0, 360],
-              }}
-              transition={{
-                duration: Math.random() * 3 + 3,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-              initial={{
-                left: `${Math.random() * 100}%`,
-                top: -20,
-              }}
-            />
-          ))}
-        </div>
+        {demoContent.hero.confettiEnabled && (
+          <div className="absolute inset-0 overflow-hidden">
+            {colors.rainbow.map((color, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-4 h-4 rounded-full"
+                style={{ backgroundColor: color }}
+                animate={{
+                  y: [-100, typeof window !== 'undefined' ? window.innerHeight + 100 : 1000],
+                  x: [Math.random() * 100, Math.random() * 100],
+                  rotate: [0, 360],
+                }}
+                transition={{
+                  duration: Math.random() * 3 + 3,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+                initial={{
+                  left: `${Math.random() * 100}%`,
+                  top: -20,
+                }}
+              />
+            ))}
+          </div>
+        )}
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <motion.div
@@ -115,7 +152,7 @@ export default function PlayfulLovePage() {
             </div>
 
             <motion.p 
-              className="text-3xl mb-12 font-bold"
+              className="text-3xl mb-8 font-bold"
               style={{ fontFamily: playfulLoveTheme.typography.accent }}
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -139,7 +176,51 @@ export default function PlayfulLovePage() {
         </div>
       </section>
 
-      {/* Timeline Section - Comic Style */}
+      {/* Stats Section */}
+      <section className="py-16 px-4 bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 
+              className="text-5xl mb-4 font-black"
+              style={{ fontFamily: playfulLoveTheme.typography.heading, color: colors.primary }}
+            >
+              Our Love in Numbers! 📊
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            {demoContent.stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05, rotate: Math.random() * 10 - 5 }}
+              >
+                <Card className="border-4 shadow-xl" style={{ borderColor: stat.color }}>
+                  <CardContent className="p-6 text-center bg-white">
+                    <div className="text-5xl mb-3">{stat.emoji}</div>
+                    <div className="text-4xl font-black mb-2" style={{ color: stat.color }}>
+                      {stat.value}
+                    </div>
+                    <div className="text-sm font-bold text-gray-700">
+                      {stat.label}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline Section */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -163,48 +244,89 @@ export default function PlayfulLovePage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {demoContent.timeline.map((event, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8, rotate: index % 2 === 0 ? -5 : 5 }}
-                whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, rotate: index % 2 === 0 ? 2 : -2 }}
-              >
-                <Card 
-                  className="border-4 shadow-2xl h-full overflow-hidden"
-                  style={{ 
-                    borderColor: colors.rainbow[index % colors.rainbow.length],
-                    transform: `rotate(${index % 2 === 0 ? -1 : 1}deg)`
-                  }}
+            {demoContent.timeline.map((event, index) => {
+              const hasExpandedStory = event.expandedStory && event.expandedStory.length > 0;
+              
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.8, rotate: index % 2 === 0 ? -5 : 5 }}
+                  whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05, rotate: index % 2 === 0 ? 2 : -2 }}
+                  onClick={() => hasExpandedStory && setSelectedTimelineEvent(event)}
+                  className={hasExpandedStory ? "cursor-pointer" : ""}
                 >
-                  <div 
-                    className="h-20 flex items-center justify-center text-6xl"
-                    style={{ backgroundColor: `${colors.rainbow[index % colors.rainbow.length]}30` }}
+                  <Card 
+                    className="border-4 shadow-2xl h-full overflow-hidden relative"
+                    style={{ 
+                      borderColor: colors.rainbow[index % colors.rainbow.length],
+                      transform: `rotate(${index % 2 === 0 ? -1 : 1}deg)`
+                    }}
                   >
-                    {event.emoji}
-                  </div>
-                  <CardContent className="p-6 bg-white">
-                    <div className="text-sm font-bold mb-2 inline-block px-3 py-1 rounded-full bg-yellow-200 border-2 border-yellow-400">
-                      {new Date(event.date).toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        year: 'numeric' 
-                      })}
-                    </div>
-                    <h3 
-                      className="text-3xl mb-4 font-black"
-                      style={{ fontFamily: playfulLoveTheme.typography.heading }}
-                    >
-                      {event.title}
-                    </h3>
-                    <p className="text-lg leading-relaxed">
-                      {event.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                    {event.image && (
+                      <div className="relative h-48 overflow-hidden">
+                        <Image
+                          src={event.image}
+                          alt={event.title}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute top-2 right-2 text-5xl">
+                          {event.emoji}
+                        </div>
+                        {hasExpandedStory && (
+                          <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                            <motion.div
+                              initial={{ scale: 0.8, opacity: 0 }}
+                              whileHover={{ scale: 1, opacity: 1 }}
+                              className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full font-bold text-sm"
+                              style={{ color: colors.rainbow[index % colors.rainbow.length] }}
+                            >
+                              📖 Click to Read Full Story
+                            </motion.div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <CardContent className="p-6 bg-white">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Calendar className="h-4 w-4" />
+                        <div className="text-sm font-bold inline-block px-3 py-1 rounded-full bg-yellow-200 border-2 border-yellow-400">
+                          {new Date(event.date).toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            year: 'numeric' 
+                          })}
+                        </div>
+                      </div>
+                      <h3 
+                        className="text-3xl mb-3 font-black"
+                        style={{ fontFamily: playfulLoveTheme.typography.heading }}
+                      >
+                        {event.title}
+                      </h3>
+                      <p className="text-lg leading-relaxed mb-3">
+                        {event.description}
+                      </p>
+
+                      {event.funFact && (
+                        <p className="text-sm italic text-gray-600 border-l-4 border-orange-400 pl-3">
+                          💡 {event.funFact}
+                        </p>
+                      )}
+
+                      {/* Click indicator */}
+                      {hasExpandedStory && (
+                        <div className="mt-4 text-center text-sm font-bold" style={{ color: colors.rainbow[index % colors.rainbow.length] }}>
+                          👆 Click card to read more
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -242,10 +364,15 @@ export default function PlayfulLovePage() {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <div className="text-4xl flex-shrink-0">🤪</div>
-                      <div>
-                        <h3 className="text-2xl font-black mb-2" style={{ fontFamily: playfulLoveTheme.typography.heading }}>
-                          {joke.joke}
-                        </h3>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-2xl font-black" style={{ fontFamily: playfulLoveTheme.typography.heading }}>
+                            {joke.joke}
+                          </h3>
+                          <Badge className="bg-yellow-200 text-yellow-800 border-yellow-400">
+                            {joke.date}
+                          </Badge>
+                        </div>
                         <p className="text-lg">
                           {joke.explanation}
                         </p>
@@ -303,9 +430,16 @@ export default function PlayfulLovePage() {
                         <X className="h-6 w-6 text-gray-400" />
                       )}
                     </div>
-                    <span className={`text-lg font-bold ${item.completed ? 'line-through text-gray-500' : ''}`}>
-                      {item.item}
-                    </span>
+                    <div className="flex-1">
+                      <span className={`text-lg font-bold ${item.completed ? 'line-through text-gray-500' : ''}`}>
+                        {item.item}
+                      </span>
+                      {item.completed && item.completedDate && (
+                        <p className="text-sm text-green-600 mt-1">
+                          ✓ Completed: {new Date(item.completedDate).toLocaleDateString()}
+                        </p>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -313,6 +447,39 @@ export default function PlayfulLovePage() {
           </div>
         </div>
       </section>
+
+      {/* Fortune Teller Game */}
+      {demoContent.games.fortuneTeller.enabled && (
+        <section className="py-20 px-4 bg-gradient-to-br from-purple-200 via-pink-200 to-yellow-200">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-5xl font-black mb-8" style={{ fontFamily: playfulLoveTheme.typography.heading }}>
+              Love Fortune Teller 🔮
+            </h2>
+            <p className="text-xl mb-8">Click the crystal ball to see what's in store for you two!</p>
+            
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={getRandomFortune}
+              className="text-9xl mb-8 cursor-pointer"
+            >
+              🔮
+            </motion.button>
+
+            {fortuneResult && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-white p-8 rounded-3xl shadow-2xl border-4 border-purple-400"
+              >
+                <p className="text-2xl font-bold">
+                  {fortuneResult}
+                </p>
+              </motion.div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Message Section */}
       <section className="py-20 px-4 bg-gradient-to-br from-yellow-100 via-pink-100 to-purple-100">
@@ -323,24 +490,24 @@ export default function PlayfulLovePage() {
             viewport={{ once: true }}
             transition={{ type: "spring" }}
           >
-            <Card className="border-8 border-rainbow shadow-2xl overflow-hidden transform rotate-1"
+            <Card className="border-8 shadow-2xl overflow-hidden transform rotate-1"
               style={{ borderColor: colors.primary }}
             >
               <div className="h-4 bg-gradient-to-r from-red-400 via-yellow-400 via-green-400 via-blue-400 to-purple-400" />
               <CardContent className="p-12 bg-white">
                 <div className="text-center mb-8">
-                  <div className="text-6xl mb-4">💌</div>
+                  <div className="text-6xl mb-4">{demoContent.message.emoji}</div>
                   <h2 
                     className="text-5xl mb-4 font-black"
                     style={{ fontFamily: playfulLoveTheme.typography.heading, color: colors.primary }}
                   >
-                    A Message for My Favorite Weirdo
+                    {demoContent.message.title}
                   </h2>
                 </div>
 
-                <div className="space-y-6">
-                  {demoContent.message.split('\n\n').map((paragraph, index) => (
-                    <p key={index} className="text-lg leading-relaxed"
+                <div className="space-y-4">
+                  {demoContent.message.paragraphs.map((paragraph, index) => (
+                    <p key={index} className={`text-lg leading-relaxed ${paragraph.startsWith('•') ? 'ml-6' : ''}`}
                       style={{ 
                         fontFamily: playfulLoveTheme.typography.body,
                         textAlign: paragraph.includes('Jake') || paragraph.includes('P.S.') ? 'right' : 'left',
@@ -367,6 +534,9 @@ export default function PlayfulLovePage() {
             >
               Cool Stuff Included! 🎪
             </h2>
+            <p className="text-xl font-bold text-gray-600">
+              Click any card to see what's inside! 👇
+            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -378,18 +548,29 @@ export default function PlayfulLovePage() {
                 viewport={{ once: true }}
                 transition={{ type: "spring", delay: index * 0.05 }}
                 whileHover={{ scale: 1.1, rotate: index % 2 === 0 ? 5 : -5 }}
+                onClick={() => {
+                  console.log('Feature clicked:', feature);
+                  setSelectedFeature(feature);
+                }}
+                className="cursor-pointer"
               >
                 <Card 
-                  className="border-4 shadow-lg"
+                  className="border-4 shadow-lg hover:shadow-2xl transition-shadow"
                   style={{ borderColor: colors.rainbow[index % colors.rainbow.length] }}
                 >
                   <CardContent className="p-6 text-center bg-white">
                     <div className="text-4xl mb-3">
-                      {['🎨', '📸', '🎮', '🎵', '😂', '🎯', '🎪', '🎁', '🎲'][index % 9]}
+                      {feature.emoji}
                     </div>
-                    <h3 className="font-black text-lg">
-                      {feature}
+                    <h3 className="font-black text-lg mb-2">
+                      {feature.name}
                     </h3>
+                    <p className="text-sm text-gray-600">
+                      {feature.shortDescription}
+                    </p>
+                    <p className="text-xs text-blue-600 mt-2 font-semibold">
+                      Click to explore →
+                    </p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -397,6 +578,527 @@ export default function PlayfulLovePage() {
           </div>
         </div>
       </section>
+
+      {/* Video Memories Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <motion.h2 
+              initial={{ scale: 0.5, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              className="text-6xl mb-4 font-black"
+              style={{ fontFamily: playfulLoveTheme.typography.heading, color: colors.primary }}
+            >
+              {demoContent.videos.title}
+            </motion.h2>
+            <p className="text-xl font-bold text-gray-600">
+              {demoContent.videos.description}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {demoContent.videos.items.map((video, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
+              >
+                <Card 
+                  className="border-4 shadow-xl overflow-hidden h-full"
+                  style={{ borderColor: colors.rainbow[index % colors.rainbow.length] }}
+                >
+                  {/* Video Player */}
+                  <div className="relative h-56 bg-black group">
+                    <video
+                      src={video.url}
+                      poster={video.thumbnail}
+                      controls
+                      className="w-full h-full object-cover"
+                      preload="metadata"
+                    />
+                    {/* Category Badge */}
+                    <div 
+                      className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg"
+                      style={{ backgroundColor: colors.rainbow[index % colors.rainbow.length] }}
+                    >
+                      {video.category}
+                    </div>
+                    {/* Duration Badge */}
+                    <div className="absolute bottom-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs font-bold">
+                      {video.duration}
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <CardContent className="p-6 bg-white">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Calendar className="h-4 w-4 text-gray-500" />
+                      <span className="text-sm text-gray-500 font-semibold">
+                        {new Date(video.date).toLocaleDateString('en-US', { 
+                          month: 'short', 
+                          day: 'numeric',
+                          year: 'numeric' 
+                        })}
+                      </span>
+                    </div>
+                    <h3 
+                      className="text-2xl font-black mb-3"
+                      style={{ 
+                        fontFamily: playfulLoveTheme.typography.heading,
+                        color: colors.rainbow[index % colors.rainbow.length]
+                      }}
+                    >
+                      {video.title}
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed">
+                      {video.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Fun Note */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <div className="inline-block bg-white border-4 border-dashed border-purple-400 rounded-2xl p-6 shadow-lg">
+              <p className="text-lg font-bold text-gray-700">
+                🎬 <span className="text-purple-600">Pro Tip:</span> Click play and watch our shenanigans! 
+                <span className="text-2xl ml-2">😎</span>
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Timeline Story Modal */}
+      <AnimatePresence>
+        {selectedTimelineEvent && selectedTimelineEvent.expandedStory && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4 overflow-y-auto"
+            onClick={() => setSelectedTimelineEvent(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 50 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-3xl max-w-4xl w-full my-8 shadow-2xl flex flex-col"
+              style={{ 
+                borderWidth: '8px', 
+                borderColor: colors.primary,
+                borderStyle: 'solid',
+                maxHeight: 'calc(100vh - 4rem)',
+              }}
+            >
+              {/* Modal Header with Image/Video */}
+              {(selectedTimelineEvent.image || selectedTimelineEvent.video) && (
+                <div className="relative h-64 overflow-hidden flex-shrink-0 rounded-t-2xl">
+                  {/* Video (if provided, takes priority) */}
+                  {selectedTimelineEvent.video ? (
+                    <video
+                      key={selectedTimelineEvent.video}
+                      src={selectedTimelineEvent.video}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover"
+                      onError={(e) => {
+                        console.error('Video failed to load:', selectedTimelineEvent.video);
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    /* Image (fallback) */
+                    <Image
+                      src={selectedTimelineEvent.image}
+                      alt={selectedTimelineEvent.title}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6 text-white z-10">
+                    <div className="text-7xl mb-3">{selectedTimelineEvent.emoji}</div>
+                    <h2 
+                      className="text-5xl font-black mb-2"
+                      style={{ fontFamily: playfulLoveTheme.typography.heading }}
+                    >
+                      {selectedTimelineEvent.title}
+                    </h2>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-5 w-5" />
+                      <span className="text-lg font-semibold">
+                        {new Date(selectedTimelineEvent.date).toLocaleDateString('en-US', { 
+                          month: 'long', 
+                          day: 'numeric',
+                          year: 'numeric' 
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setSelectedTimelineEvent(null)}
+                    className="absolute top-4 right-4 bg-white/90 hover:bg-white rounded-full p-3 transition-all shadow-lg z-20"
+                  >
+                    <XCircle className="h-8 w-8 text-gray-700" />
+                  </button>
+                </div>
+              )}
+
+              {/* Modal Content - Scrollable */}
+              <div className="overflow-y-auto flex-1 p-8">
+                {/* Short Description */}
+                <div className="bg-gradient-to-r from-yellow-100 to-pink-100 p-6 rounded-2xl mb-6 border-4 border-dashed border-orange-300">
+                  <p className="text-xl leading-relaxed text-gray-800 font-semibold text-center">
+                    {selectedTimelineEvent.description}
+                  </p>
+                </div>
+
+                {/* Full Story */}
+                <div className="mb-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <Heart className="h-8 w-8 text-red-500 fill-red-500" />
+                    <h3 
+                      className="text-4xl font-black"
+                      style={{ 
+                        fontFamily: playfulLoveTheme.typography.accent,
+                        color: colors.primary 
+                      }}
+                    >
+                      The Full Story...
+                    </h3>
+                  </div>
+
+                  <div className="space-y-4">
+                    {selectedTimelineEvent.expandedStory.split('\n\n').map((paragraph: string, pIndex: number) => (
+                      <motion.p
+                        key={pIndex}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: pIndex * 0.1 }}
+                        className="text-lg leading-relaxed text-gray-700"
+                        style={{ fontFamily: playfulLoveTheme.typography.body }}
+                      >
+                        {paragraph}
+                      </motion.p>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Fun Fact */}
+                {selectedTimelineEvent.funFact && (
+                  <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl border-4 border-blue-200">
+                    <div className="flex items-start gap-3">
+                      <span className="text-4xl">💡</span>
+                      <div>
+                        <h4 className="font-bold text-xl mb-2 text-blue-900">Fun Fact:</h4>
+                        <p className="text-lg text-gray-700 italic">{selectedTimelineEvent.funFact}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Mood Badge */}
+                {selectedTimelineEvent.mood && (
+                  <div className="mt-6 text-center">
+                    <Badge className="text-lg py-2 px-6 bg-gradient-to-r from-pink-200 to-purple-200 text-purple-800 border-2 border-purple-400">
+                      Mood: {selectedTimelineEvent.mood} ✨
+                    </Badge>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Feature Detail Modal */}
+      <AnimatePresence>
+        {selectedFeature && selectedFeature.detailedContent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 overflow-y-auto"
+            onClick={() => setSelectedFeature(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-3xl max-w-4xl w-full my-8 shadow-2xl flex flex-col"
+              style={{ 
+                borderWidth: '6px', 
+                borderColor: colors.primary,
+                maxHeight: 'calc(100vh - 4rem)',
+              }}
+            >
+              <div className="bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300 p-6 rounded-t-3xl flex justify-between items-center flex-shrink-0">
+                <div>
+                  <div className="text-6xl mb-2">{selectedFeature.emoji}</div>
+                  <h2 className="text-4xl font-black" style={{ fontFamily: playfulLoveTheme.typography.heading }}>
+                    {selectedFeature.detailedContent.title}
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setSelectedFeature(null)}
+                  className="text-gray-700 hover:text-gray-900 transition bg-white/50 hover:bg-white/80 rounded-full p-2"
+                >
+                  <XCircle className="h-10 w-10" />
+                </button>
+              </div>
+
+              <div className="p-8 overflow-y-auto flex-1">
+                {/* Description */}
+                <p className="text-xl leading-relaxed mb-8 text-gray-700">
+                  {selectedFeature.detailedContent.description}
+                </p>
+
+                {/* Benefits */}
+                {selectedFeature.detailedContent.benefits && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-black mb-4 flex items-center gap-2">
+                      <Sparkles className="h-6 w-6 text-yellow-500" />
+                      What You Get:
+                    </h3>
+                    <div className="grid md:grid-cols-2 gap-3">
+                      {selectedFeature.detailedContent.benefits.map((benefit: string, idx: number) => (
+                        <div key={idx} className="flex items-start gap-3 bg-green-50 p-3 rounded-lg border-2 border-green-200">
+                          <Check className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-700">{benefit}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Samples */}
+                {selectedFeature.detailedContent.samples && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-black mb-4 flex items-center gap-2">
+                      <Camera className="h-6 w-6 text-pink-500" />
+                      Sample Styles:
+                    </h3>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {selectedFeature.detailedContent.samples.map((sample: any, idx: number) => (
+                        <Card key={idx} className="border-4 border-purple-300 overflow-hidden">
+                          <div className="relative h-48">
+                            {sample.video ? (
+                              <video
+                                src={sample.video}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="absolute inset-0 w-full h-full object-cover"
+                              />
+                            ) : (
+                              <Image
+                                src={sample.preview}
+                                alt={sample.style}
+                                fill
+                                className="object-cover"
+                              />
+                            )}
+                          </div>
+                          <CardContent className="p-4">
+                            <h4 className="font-bold text-lg mb-2">{sample.style}</h4>
+                            <p className="text-sm text-gray-600">{sample.description}</p>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Filters */}
+                {selectedFeature.detailedContent.filters && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-black mb-4">Available Filters:</h3>
+                    <div className="flex flex-wrap gap-3">
+                      {selectedFeature.detailedContent.filters.map((filter: any, idx: number) => (
+                        <Badge key={idx} className="text-lg py-2 px-4 bg-gradient-to-r from-pink-200 to-purple-200 text-purple-800 border-2 border-purple-400">
+                          {filter.emoji} {filter.name}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Games */}
+                {selectedFeature.detailedContent.games && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-black mb-4">Games Included:</h3>
+                    <div className="space-y-4">
+                      {selectedFeature.detailedContent.games.map((game: any, idx: number) => (
+                        <Card key={idx} className="border-4" style={{ borderColor: colors.rainbow[idx % colors.rainbow.length] }}>
+                          <CardContent className="p-6">
+                            <div className="flex items-start gap-4">
+                              <div className="text-5xl">{game.emoji}</div>
+                              <div className="flex-1">
+                                <h4 className="text-xl font-bold mb-2">{game.name}</h4>
+                                <p className="text-gray-600 mb-2">{game.description}</p>
+                                <Badge className="bg-blue-100 text-blue-700">
+                                  {game.questions} Questions
+                                </Badge>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Meme Categories */}
+                {selectedFeature.detailedContent.memeCategories && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-black mb-4">Meme Categories:</h3>
+                    <div className="space-y-3">
+                      {selectedFeature.detailedContent.memeCategories.map((cat: any, idx: number) => (
+                        <div key={idx} className="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-300">
+                          <div className="flex items-start gap-3">
+                            <span className="text-3xl">{cat.emoji}</span>
+                            <div>
+                              <h4 className="font-bold text-lg">{cat.category}</h4>
+                              <p className="text-gray-600 italic">{cat.example}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Features List */}
+                {selectedFeature.detailedContent.features && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-black mb-4">Special Features:</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {selectedFeature.detailedContent.features.map((feat: any, idx: number) => (
+                        <div key={idx} className="bg-blue-50 p-4 rounded-lg border-2 border-blue-200">
+                          <div className="flex items-start gap-3">
+                            <span className="text-2xl">{feat.icon}</span>
+                            <div>
+                              <h4 className="font-bold">{feat.feature}</h4>
+                              <p className="text-sm text-gray-600">{feat.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Categories */}
+                {selectedFeature.detailedContent.categories && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-black mb-4">Categories:</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {selectedFeature.detailedContent.categories.map((cat: any, idx: number) => (
+                        <Card key={idx} className="border-4" style={{ borderColor: colors.rainbow[idx % colors.rainbow.length] }}>
+                          <CardContent className="p-4 text-center">
+                            <div className="text-4xl mb-2">{cat.emoji}</div>
+                            <h4 className="font-bold text-sm mb-1">{cat.name}</h4>
+                            <Badge className="text-xs">{cat.count} items</Badge>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Card Types */}
+                {selectedFeature.detailedContent.cardTypes && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-black mb-4">Card Types:</h3>
+                    <div className="space-y-4">
+                      {selectedFeature.detailedContent.cardTypes.map((type: any, idx: number) => (
+                        <Card key={idx} className="border-4 border-pink-300">
+                          <CardContent className="p-6">
+                            <div className="flex items-start gap-4">
+                              <span className="text-5xl">{type.emoji}</span>
+                              <div>
+                                <h4 className="text-xl font-bold mb-2">{type.type}</h4>
+                                <div className="flex flex-wrap gap-2">
+                                  {type.examples.map((ex: string, i: number) => (
+                                    <Badge key={i} className="bg-purple-100 text-purple-700">
+                                      {ex}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Fortunes */}
+                {selectedFeature.detailedContent.fortunes && (
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-black mb-4">Fortune Categories:</h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {selectedFeature.detailedContent.fortunes.map((fortune: any, idx: number) => (
+                        <div key={idx} className="bg-purple-50 p-4 rounded-lg border-2 border-purple-300">
+                          <div className="flex items-start gap-3">
+                            <span className="text-3xl">{fortune.emoji}</span>
+                            <div>
+                              <h4 className="font-bold text-lg">{fortune.category}</h4>
+                              <p className="text-sm text-gray-600 italic">"{fortune.example}"</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* How It Works */}
+                <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl border-4 border-blue-300">
+                  <h3 className="text-2xl font-black mb-4 flex items-center gap-2">
+                    <Zap className="h-6 w-6 text-yellow-500" />
+                    How It Works:
+                  </h3>
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    {selectedFeature.detailedContent.howItWorks}
+                  </p>
+                </div>
+
+                {/* CTA */}
+                <div className="mt-8 text-center">
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white text-xl font-black px-8 py-6"
+                    asChild
+                  >
+                    <Link href="/pricing?theme=playful">
+                      Get This Feature! 🎯
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* CTA */}
       <section className="py-20 px-4 bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300">
@@ -444,7 +1146,27 @@ export default function PlayfulLovePage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 bg-gray-900 text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-xl mb-4" style={{ fontFamily: playfulLoveTheme.typography.accent }}>
+            {demoContent.footer.tagline}
+          </p>
+          <div className="flex justify-center gap-6 mb-6">
+            {demoContent.footer.links.map((link, index) => (
+              <a key={index} href={link.url} className="hover:text-yellow-400 transition">
+                {link.label}
+              </a>
+            ))}
+          </div>
+          {demoContent.footer.socialMedia && (
+            <div className="text-sm text-gray-400">
+              {demoContent.footer.socialMedia.instagram} • {demoContent.footer.socialMedia.tiktok}
+            </div>
+          )}
+        </div>
+      </footer>
     </div>
   );
 }
-
