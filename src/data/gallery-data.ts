@@ -2,7 +2,7 @@ import type { PhotoGalleryItem } from '@/types';
 import { weddingInfo } from '@/data/wedding-info';
 import { assetsConfig } from '@/config/assets.config';
 
-// Helper function to generate alt text with couple names
+// Helper function to generate alt text with couple names.
 const getAltText = (description: string) => 
   `${weddingInfo.bride.name} and ${weddingInfo.groom.name} - ${description}`;
 
