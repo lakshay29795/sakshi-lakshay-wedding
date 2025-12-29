@@ -296,3 +296,4 @@ Your admin configuration panel is ready to use!
 
 **Happy customizing! 💒✨**
 
+

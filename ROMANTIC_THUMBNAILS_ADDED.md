@@ -377,3 +377,4 @@ const thumbnailGradients: Record<RevealType, string> = {
 *Design System: Complete*  
 *Status: ✅ READY*
 
+

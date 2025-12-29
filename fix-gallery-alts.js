@@ -10,3 +10,4 @@ content = content.replace(/alt: `\$\{coupleNames\} - ([^']+)',/g, "alt: getAltTe
 fs.writeFileSync(filePath, content, 'utf8');
 console.log('Fixed all alt texts in gallery-data.ts');
 
+

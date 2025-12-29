@@ -174,3 +174,4 @@ Restart server and visit gallery. You should see:
 *Fix: Changed import path*  
 *Status: ✅ COMPLETE*
 
+

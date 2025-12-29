@@ -346,3 +346,4 @@ websiteConfig.coupleName.bride  // Error: property doesn't exist
 *Status: ✅ COMPLETE*  
 *TypeScript Errors: None ✅*
 
+

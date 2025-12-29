@@ -183,3 +183,4 @@ const name = websiteConfig.couple.bride.name;
 **Status**: Main features are dynamic ✅
 **Remaining**: Optional/internal files only
 
+

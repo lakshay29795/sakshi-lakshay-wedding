@@ -13,14 +13,14 @@ export const websiteConfig = {
   // ====================
   couple: {
     bride: {
-      name: 'Jane',
-      fullName: 'Jane Marie Smith',
+      name: 'Roshni',
+      fullName: 'Roshni',
       // Path to bride's photo (relative to /public folder)
       photo: '/images/couple/bride.jpg',
     },
     groom: {
-      name: 'John',
-      fullName: 'John Michael Doe',
+      name: 'Rahul',
+      fullName: 'Rahul',
       // Path to groom's photo (relative to /public folder)
       photo: '/images/couple/groom.jpg',
     },
@@ -31,7 +31,7 @@ export const websiteConfig = {
   // ====================
   wedding: {
     // Wedding date and time (format: 'YYYY-MM-DDTHH:mm:ss')
-    date: '2025-12-20T16:00:00',
+    date: '2026-01-20T16:00:00',
     
     // Venue information
     venue: {

@@ -420,3 +420,4 @@ http://localhost:3000/gallery
 *Photos: 40 from Unsplash*
 *Status: ✅ COMPLETE*
 
+
