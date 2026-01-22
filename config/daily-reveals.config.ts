@@ -105,7 +105,7 @@ export const dailyRevealsConfig = {
       type: 'photo' as const,
       title: "Our First Date",
       description: "Where it all began",
-      image: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&h=600",
+      image: "https://images.pexels.com/photos/4312831/pexels-photo-4312831.jpeg",
       message: "30 days until we say 'I do'! Remember our first date at that cozy café? I was so nervous, but the moment you smiled, everything felt right. I knew from that day that you were someone special. ❤️",
       category: 'memory' as const,
       isSpecial: true

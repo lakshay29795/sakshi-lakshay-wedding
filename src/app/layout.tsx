@@ -100,12 +100,10 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+      { url: "/demo-content/images/gift-logo.jpg", sizes: "192x192", type: "image/jpeg" },
     ],
     apple: [
-      { url: "/icons/icon-152x152.png", sizes: "152x152", type: "image/png" },
-      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/demo-content/images/gift-logo.jpg", sizes: "192x192", type: "image/jpeg" },
     ],
   },
 };
@@ -130,9 +128,9 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icons/icon-192x192.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="icon" href="/demo-content/images/gift-logo.jpg" sizes="any" />
+        <link rel="icon" href="/demo-content/images/gift-logo.jpg" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/demo-content/images/gift-logo.jpg" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content={coupleNames} />

@@ -19,8 +19,8 @@ export const websiteConfig = {
       photo: '/images/couple/bride.jpg',
     },
     groom: {
-      name: 'Rahul',
-      fullName: 'Rahul',
+      name: 'Karan',
+      fullName: 'Karan Singh',
       // Path to groom's photo (relative to /public folder)
       photo: '/images/couple/groom.jpg',
     },
@@ -31,7 +31,7 @@ export const websiteConfig = {
   // ====================
   wedding: {
     // Wedding date and time (format: 'YYYY-MM-DDTHH:mm:ss')
-    date: '2026-01-20T16:00:00',
+    date: '2026-02-14T16:00:00',
     
     // Venue information
     venue: {
@@ -142,7 +142,7 @@ export const websiteConfig = {
   social: {
     // Add your social media handles (optional)
     instagram: '@janeandjohn2025',
-    instagramUrl: 'https://instagram.com/janeandjohn2025', // Full Instagram profile URL
+    instagramUrl: 'https://www.instagram.com/foreverlink.gifts/', // Full Instagram profile URL
     facebook: 'janeandjohnwedding',
     facebookUrl: 'https://facebook.com/janeandjohnwedding', // Full Facebook page URL
     twitter: '@janeandjohn',

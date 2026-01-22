@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Sparkles, Calendar, MapPin } from 'lucide-react';
 import { weddingInfo } from '@/data/wedding-info';
+import { assetsConfig } from '@/config/assets.config';
 
 interface PersonalizedHeroProps {
   className?: string;
@@ -66,7 +67,7 @@ export function PersonalizedHero({ className }: PersonalizedHeroProps) {
         {/* Background Image */}
         <div className="absolute inset-0 bg-gradient-to-br from-romantic-blush-light via-romantic-lavender-light to-romantic-cream">
           <img 
-            src="/images/couple/celestial-hero.jpg"
+            src={assetsConfig.couple.hero}
             alt={`${weddingInfo.bride.name} and ${weddingInfo.groom.name}`}
             className="w-full h-full object-cover opacity-30 mix-blend-multiply"
             onError={(e) => {
@@ -77,7 +78,8 @@ export function PersonalizedHero({ className }: PersonalizedHeroProps) {
         </div>
         
         {/* Romantic Gradient Overlay */}
-        <motion.div 
+        {/* ENABLE this for gradient overlay pink in color */}
+        {/* <motion.div 
           className="absolute inset-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -88,7 +90,7 @@ export function PersonalizedHero({ className }: PersonalizedHeroProps) {
               linear-gradient(135deg, rgba(248, 232, 232, 0.75) 0%, rgba(232, 224, 245, 0.7) 50%, rgba(255, 248, 240, 0.75) 100%)
             `
           }}
-        />
+        /> */}
 
         {/* Soft Glowing Effect */}
         <div className="absolute inset-0 overflow-hidden">
