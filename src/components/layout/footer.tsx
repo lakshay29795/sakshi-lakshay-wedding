@@ -7,6 +7,7 @@ import { Heading, Text, Script } from '@/components/ui/typography';
 import { Heart, Instagram, Facebook, Mail, MapPin, Calendar } from 'lucide-react';
 import { ScrollReveal } from '@/components/animations/scroll-reveal';
 import { websiteConfig } from '@/config/website.config';
+import { getWeddingDate } from '@/lib/wedding-date';
 
 interface FooterProps {
   className?: string;
@@ -67,7 +68,7 @@ export function Footer({ className }: FooterProps) {
                 </Text>
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  <span>{new Date(websiteConfig.wedding.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                  <span>{getWeddingDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <MapPin className="h-4 w-4" />

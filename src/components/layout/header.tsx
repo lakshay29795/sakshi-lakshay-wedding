@@ -10,6 +10,7 @@ import { Menu, X, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PWAStatusCompact } from '@/components/pwa/PWAStatus';
 import { websiteConfig } from '@/config/website.config';
+import { getWeddingDate } from '@/lib/wedding-date';
 
 interface HeaderProps {
   className?: string;
@@ -83,7 +84,7 @@ export function Header({ className }: HeaderProps) {
                 {websiteConfig.couple.bride.name} & {websiteConfig.couple.groom.name}
               </span>
               {/* <span className="romantic-body-text text-xs leading-none text-romantic-charcoal-light">
-                {new Date(websiteConfig.wedding.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                {getWeddingDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
               </span> */}
             </div>
           </Link>

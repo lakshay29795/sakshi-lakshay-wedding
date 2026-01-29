@@ -8,7 +8,9 @@
 import { WeddingCouple, TimelineEvent } from '@/types';
 import { websiteConfig } from '@/config/website.config';
 import { contentConfig } from '@/config/content.config';
+import { getWeddingDate } from '@/lib/wedding-date';
 
+// Use a getter to ensure weddingDate is always recalculated dynamically
 export const weddingInfo: WeddingCouple = {
   bride: {
     name: websiteConfig.couple.bride.name,
@@ -20,7 +22,9 @@ export const weddingInfo: WeddingCouple = {
     fullName: websiteConfig.couple.groom.fullName,
     photo: websiteConfig.couple.groom.photo,
   },
-  weddingDate: new Date(websiteConfig.wedding.date),
+  get weddingDate() {
+    return getWeddingDate(); // Always 15 days from now
+  },
   venue: {
     name: websiteConfig.wedding.venue.name,
     address: websiteConfig.wedding.venue.address,

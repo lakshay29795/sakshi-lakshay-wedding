@@ -31,7 +31,7 @@ export const websiteConfig = {
   // ====================
   wedding: {
     // Wedding date and time (format: 'YYYY-MM-DDTHH:mm:ss')
-    date: '2026-02-14T16:00:00',
+    // date: '2026-02-14T16:00:00', // Uncomment this to set a specific date
     
     // Venue information
     venue: {
@@ -160,15 +160,6 @@ export const websiteConfig = {
   },
 } as const;
 
-// Helper function to get the wedding date as a Date object
-export const getWeddingDate = () => new Date(websiteConfig.wedding.date);
-
-// Helper function to get days until wedding
-export const getDaysUntilWedding = () => {
-  const now = new Date();
-  const wedding = getWeddingDate();
-  const diffTime = wedding.getTime() - now.getTime();
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return Math.max(0, diffDays);
-};
+// Note: Import getWeddingDate from src/lib/wedding-date.ts
+// If the date above is set, it will be used. Otherwise, it falls back to 15 days from today.
 

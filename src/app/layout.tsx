@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { PWAInstallPrompt, PWAInstallButton } from "@/components/pwa/PWAInstallPrompt";
 import { FirstVisitWrapper } from "@/components/features/first-visit-wrapper";
 import { websiteConfig } from "@/config/website.config";
+import { getWeddingDate } from "@/lib/wedding-date";
 
 // Font configurations
 const inter = Inter({
@@ -30,7 +31,7 @@ const dancing = Dancing_Script({
 
 const siteTitle = `${websiteConfig.couple.bride.name} & ${websiteConfig.couple.groom.name}'s Wedding`;
 const coupleNames = `${websiteConfig.couple.bride.name} & ${websiteConfig.couple.groom.name}`;
-const weddingDate = new Date(websiteConfig.wedding.date);
+const weddingDate = getWeddingDate();
 const formattedDate = weddingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
 export const metadata: Metadata = {

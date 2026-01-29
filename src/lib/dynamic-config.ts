@@ -8,6 +8,7 @@
 import { db } from '@/lib/firebase/config';
 import { doc, getDoc } from 'firebase/firestore';
 import { websiteConfig as staticConfig } from '@/config/website.config';
+import { getWeddingDate } from '@/lib/wedding-date';
 
 let cachedConfig: any = null;
 let lastFetch: number = 0;
@@ -65,6 +66,10 @@ export async function loadDynamicConfig(): Promise<DynamicConfig> {
   }
 
   // Fallback to static config
+  // Use getWeddingDate() which returns config date if set, otherwise 15 days from now
+  const weddingDate = getWeddingDate();
+  const formattedDate = weddingDate.toISOString().slice(0, 19); // Format: 'YYYY-MM-DDTHH:mm:ss'
+  
   const fallbackConfig: DynamicConfig = {
     couple: {
       bride: {
@@ -79,7 +84,7 @@ export async function loadDynamicConfig(): Promise<DynamicConfig> {
       },
     },
     wedding: {
-      date: staticConfig.wedding.date,
+      date: formattedDate,
       venue: {
         name: staticConfig.wedding.venue.name,
         address: staticConfig.wedding.venue.address,
@@ -134,10 +139,11 @@ export function clearConfigCache() {
  */
 export async function syncStaticToFirebase() {
   try {
+    const dynamicDate = getWeddingDate().toISOString().slice(0, 19);
     const configData = {
       couple: staticConfig.couple,
       wedding: {
-        date: staticConfig.wedding.date,
+        date: dynamicDate,
         venue: staticConfig.wedding.venue,
       },
       site: {

@@ -1,18 +1,36 @@
 /**
  * SINGLE SOURCE OF TRUTH FOR WEDDING DATE
  * 
- * This file provides a centralized way to get the wedding date from config.
+ * This file provides a centralized way to get the wedding date.
+ * - If a wedding date is configured in website.config.ts, that date is used
+ * - Otherwise, it falls back to 15 days from the current date
  * All components should use these utilities instead of directly accessing the date.
  */
 
 import { websiteConfig } from '@/config/website.config';
 
 /**
- * Get the wedding date from config
+ * Get the wedding date from config, or fallback to 15 days from now
  * This is the ONLY place the wedding date should be retrieved from
  */
 export function getWeddingDate(): Date {
-  return new Date(websiteConfig.wedding.date);
+  const configDate = websiteConfig.wedding.date;
+  
+  // If config has a valid date, use it
+  if (configDate && configDate.trim() !== '') {
+    const parsedDate = new Date(configDate);
+    // Check if the parsed date is valid
+    if (!isNaN(parsedDate.getTime())) {
+      return parsedDate;
+    }
+  }
+  
+  // Fallback: 15 days from now at 4:00 PM
+  const now = new Date();
+  const weddingDate = new Date(now);
+  weddingDate.setDate(weddingDate.getDate() + 15);
+  weddingDate.setHours(16, 0, 0, 0); // Set to 4:00 PM
+  return weddingDate;
 }
 
 /**
