@@ -3,18 +3,24 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Heart, Sparkles, Gift, Calendar, Check, X, Music, Camera, Zap, XCircle } from 'lucide-react';
+import { ArrowLeft, Heart, Sparkles, Gift, Calendar, Check, X, Music, Camera, Zap, XCircle, Play, Pause, Volume2, VolumeX, Maximize2, Minimize2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { playfulLoveTheme } from '@/config/themes/playful-love.config';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function PlayfulLovePage() {
   const { demoContent, colors } = playfulLoveTheme;
   const [fortuneResult, setFortuneResult] = useState<string | null>(null);
   const [selectedFeature, setSelectedFeature] = useState<any>(null);
   const [selectedTimelineEvent, setSelectedTimelineEvent] = useState<any>(null);
+  const [selectedVideo, setSelectedVideo] = useState<any>(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(false);
+  const [isPipMode, setIsPipMode] = useState(false);
+  const modalVideoRef = useRef<HTMLVideoElement>(null);
+  const pipVideoRef = useRef<HTMLVideoElement>(null);
 
   const getRandomFortune = () => {
     const fortunes = demoContent.games.fortuneTeller.options;
@@ -45,6 +51,56 @@ export default function PlayfulLovePage() {
       document.body.style.overflow = 'unset';
     };
   }, [selectedFeature]);
+
+  // Lock body scroll when video modal is open
+  useEffect(() => {
+    if (selectedVideo) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+      setIsVideoPlaying(false);
+      setIsPipMode(false);
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedVideo]);
+
+  // Handle video play/pause
+  const toggleVideoPlay = () => {
+    if (modalVideoRef.current) {
+      if (isVideoPlaying) {
+        modalVideoRef.current.pause();
+      } else {
+        modalVideoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
+  // Handle video mute/unmute
+  const toggleVideoMute = () => {
+    if (modalVideoRef.current) {
+      modalVideoRef.current.muted = !isVideoMuted;
+      setIsVideoMuted(!isVideoMuted);
+    }
+  };
+
+  // Handle closing video modal
+  const handleCloseVideo = () => {
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause();
+    }
+    setSelectedVideo(null);
+    setIsVideoPlaying(false);
+    setIsPipMode(false);
+  };
+
+  // Handle video click on card
+  const handleVideoClick = (video: any) => {
+    setSelectedVideo(video);
+    setIsVideoPlaying(true);
+  };
 
   return (
     <div className="min-h-screen" 
@@ -606,20 +662,29 @@ export default function PlayfulLovePage() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -10 }}
+                onClick={() => handleVideoClick({ ...video, index })}
+                className="cursor-pointer"
               >
                 <Card 
-                  className="border-4 shadow-xl overflow-hidden h-full"
+                  className="border-4 shadow-xl overflow-hidden h-full hover:shadow-2xl transition-all duration-300"
                   style={{ borderColor: colors.rainbow[index % colors.rainbow.length] }}
                 >
-                  {/* Video Player */}
-                  <div className="relative h-56 bg-black group">
-                    <video
-                      src={video.url}
-                      poster={video.thumbnail}
-                      controls
-                      className="w-full h-full object-cover"
-                      preload="metadata"
+                  {/* Video Thumbnail */}
+                  <div className="relative h-56 bg-black group overflow-hidden">
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
+                    {/* Play Button Overlay */}
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        className="w-20 h-20 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl"
+                      >
+                        <Play className="h-10 w-10 ml-1" style={{ color: colors.rainbow[index % colors.rainbow.length] }} fill="currentColor" />
+                      </motion.div>
+                    </div>
                     {/* Category Badge */}
                     <div 
                       className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg"
@@ -630,6 +695,10 @@ export default function PlayfulLovePage() {
                     {/* Duration Badge */}
                     <div className="absolute bottom-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs font-bold">
                       {video.duration}
+                    </div>
+                    {/* Click to Play Indicator */}
+                    <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <Play className="h-3 w-3" /> Click to Play
                     </div>
                   </div>
 
@@ -1093,6 +1162,239 @@ export default function PlayfulLovePage() {
                       Get This Feature! 🎯
                     </Link>
                   </Button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Fullscreen Video Modal */}
+      <AnimatePresence>
+        {selectedVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black z-[70] flex flex-col"
+            onClick={handleCloseVideo}
+          >
+            {/* Close Button */}
+            <motion.button
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              onClick={handleCloseVideo}
+              className="absolute top-4 right-4 z-[80] bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 transition-all"
+            >
+              <XCircle className="h-8 w-8 text-white" />
+            </motion.button>
+
+            {/* Video Title Header */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute top-4 left-4 z-[80] flex items-center gap-4"
+            >
+              <div 
+                className="px-4 py-2 rounded-full text-sm font-bold text-white shadow-lg"
+                style={{ backgroundColor: colors.rainbow[selectedVideo.index % colors.rainbow.length] }}
+              >
+                {selectedVideo.category}
+              </div>
+              <h2 
+                className="text-2xl md:text-3xl font-black text-white drop-shadow-lg"
+                style={{ fontFamily: playfulLoveTheme.typography.heading }}
+              >
+                {selectedVideo.title}
+              </h2>
+            </motion.div>
+
+            {/* Main Video Container */}
+            <div 
+              className="flex-1 flex items-center justify-center p-4 md:p-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className={`relative w-full ${isPipMode ? 'max-w-4xl' : 'max-w-6xl'} aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl`}
+                style={{ 
+                  borderWidth: '4px',
+                  borderColor: colors.rainbow[selectedVideo.index % colors.rainbow.length],
+                }}
+              >
+                <video
+                  ref={modalVideoRef}
+                  src={selectedVideo.url}
+                  poster={selectedVideo.thumbnail}
+                  className="w-full h-full object-contain"
+                  autoPlay
+                  onPlay={() => setIsVideoPlaying(true)}
+                  onPause={() => setIsVideoPlaying(false)}
+                  onEnded={() => setIsVideoPlaying(false)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleVideoPlay();
+                  }}
+                />
+
+                {/* Custom Video Controls */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 md:p-6">
+                  <div className="flex items-center justify-between gap-4">
+                    {/* Play/Pause Button */}
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleVideoPlay();
+                      }}
+                      className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all"
+                    >
+                      {isVideoPlaying ? (
+                        <Pause className="h-6 w-6 md:h-7 md:w-7 text-white" />
+                      ) : (
+                        <Play className="h-6 w-6 md:h-7 md:w-7 text-white ml-1" />
+                      )}
+                    </motion.button>
+
+                    {/* Video Info */}
+                    <div className="flex-1 text-white">
+                      <p className="text-sm md:text-base font-semibold truncate">
+                        {selectedVideo.description}
+                      </p>
+                      <p className="text-xs md:text-sm text-white/70">
+                        {new Date(selectedVideo.date).toLocaleDateString('en-US', { 
+                          month: 'long', 
+                          day: 'numeric',
+                          year: 'numeric' 
+                        })} • {selectedVideo.duration}
+                      </p>
+                    </div>
+
+                    {/* Right Controls */}
+                    <div className="flex items-center gap-2">
+                      {/* Mute/Unmute Button */}
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleVideoMute();
+                        }}
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all"
+                      >
+                        {isVideoMuted ? (
+                          <VolumeX className="h-5 w-5 md:h-6 md:w-6 text-white" />
+                        ) : (
+                          <Volume2 className="h-5 w-5 md:h-6 md:w-6 text-white" />
+                        )}
+                      </motion.button>
+
+                      {/* PiP Toggle Button */}
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsPipMode(!isPipMode);
+                        }}
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all"
+                        title={isPipMode ? "Exit mini view" : "Switch to mini view"}
+                      >
+                        {isPipMode ? (
+                          <Maximize2 className="h-5 w-5 md:h-6 md:w-6 text-white" />
+                        ) : (
+                          <Minimize2 className="h-5 w-5 md:h-6 md:w-6 text-white" />
+                        )}
+                      </motion.button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Play Button Overlay (when paused) */}
+                {!isVideoPlaying && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleVideoPlay();
+                    }}
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl"
+                    >
+                      <Play 
+                        className="h-12 w-12 md:h-16 md:w-16 ml-2" 
+                        style={{ color: colors.rainbow[selectedVideo.index % colors.rainbow.length] }} 
+                        fill="currentColor" 
+                      />
+                    </motion.div>
+                  </motion.div>
+                )}
+              </motion.div>
+            </div>
+
+            {/* Video List Thumbnails at Bottom */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-black/80 backdrop-blur-sm p-4 border-t border-white/10"
+            >
+              <div className="max-w-6xl mx-auto">
+                <p className="text-white/70 text-sm font-semibold mb-3">More Videos</p>
+                <div className="flex gap-3 overflow-x-auto pb-2">
+                  {demoContent.videos.items.map((video, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedVideo({ ...video, index });
+                        setIsVideoPlaying(true);
+                      }}
+                      className={`relative flex-shrink-0 w-32 md:w-40 aspect-video rounded-lg overflow-hidden cursor-pointer ${
+                        selectedVideo.index === index ? 'ring-4' : 'ring-2 ring-white/20 hover:ring-white/40'
+                      }`}
+                      style={{ 
+                        ringColor: selectedVideo.index === index ? colors.rainbow[index % colors.rainbow.length] : undefined 
+                      }}
+                    >
+                      <img
+                        src={video.thumbnail}
+                        alt={video.title}
+                        className="w-full h-full object-cover"
+                      />
+                      {selectedVideo.index === index && (
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                            {isVideoPlaying ? (
+                              <Pause className="h-4 w-4" style={{ color: colors.rainbow[index % colors.rainbow.length] }} />
+                            ) : (
+                              <Play className="h-4 w-4 ml-0.5" style={{ color: colors.rainbow[index % colors.rainbow.length] }} fill="currentColor" />
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      {selectedVideo.index !== index && (
+                        <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-all flex items-center justify-center opacity-0 hover:opacity-100">
+                          <div className="w-8 h-8 rounded-full bg-white/80 flex items-center justify-center">
+                            <Play className="h-4 w-4 ml-0.5" style={{ color: colors.rainbow[index % colors.rainbow.length] }} fill="currentColor" />
+                          </div>
+                        </div>
+                      )}
+                      <div className="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
+                        {video.duration}
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </motion.div>
