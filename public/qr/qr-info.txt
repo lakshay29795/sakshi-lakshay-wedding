@@ -1,0 +1,13 @@
+ForeverLink Gifts — QR Code
+===========================
+
+Target URL: https://your-actual-url/foreverlink.html
+Generated:  2026-05-19T20:17:00.685Z
+
+Sizes:
+  - qr-small.png (300x300px)
+  - qr-medium.png (800x800px)
+  - qr-large-print.png (1500x1500px)
+
+To regenerate with a different URL:
+  node scripts/generate-qr.js https://your-new-url/promo
